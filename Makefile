@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/04/03 17:34:45 by mhaan         ########   odam.nl          #
+#    Updated: 2023/04/04 15:20:31 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,11 @@ CFLAGS ?= -Wall -Wextra -Werror
 AR := ar -crs
 
 #DIRS AND FILES
-HEADERS		:=	-I ./includes -I $(LIBMLX)/include -I $(LIBFT_DIR)/includes
+LIBMLX		:= ./libs/MLX42
+LIBFT		:= ./libs/libft_ext
+LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L "/Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/"
+
+HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
 
 SRC_DIR		:=	./src
 SRC			:=	main.c
@@ -28,40 +32,35 @@ OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 
 #DEPENDENCIES:
-LIBMLX		:= ./libs/MLX42
-LIBFT_DIR	:= ./libs/libft_ext
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT_DIR)/libft_ext.a
 
 #RECIPES:
-all:	libmlx $(NAME)
+all:	libmlx libft $(NAME)
 
 libmlx:
 		@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j
 
+libft:
+		@make -C $(LIBFT)
+
 clean:
 		@$(RM) $(OBJ_DIR)
-		@$(MAKE) clean -C $(LIBFT_DIR)
 		@rm -rf $(LIBMLX)/build/
+		@$(MAKE) clean -C $(LIBFT)
 
 fclean: clean
 		@$(RM) $(NAME)
-		@$(RM) $(LIBFT_AR)
+		@$(MAKE) fclean -C $(LIBFT)
 
 re:		clean all
 
 #RULES:
-# $(NAME): $(OBJS)
-# @$(MAKE) -C $(LIBFT_DIR)
-# @$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_AR) -o $(NAME)
-
-$(NAME): $(OBJ)
-		$(CC) $(OBJ) libmlx42.a -lglfw -L "/Users/$USER/.brew/opt/glfw/lib/" -o $(NAME)
+$(NAME): $(OBJS)
+		$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
-		@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+		@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
-# @$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 #OTHER:
 .PHONY:	all, clean, fclean, re, libmlx
