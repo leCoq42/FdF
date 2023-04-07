@@ -6,13 +6,13 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 16:58:57 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/06 15:37:18 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/07 13:50:20 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-typedef void	(*mlx_closefunc)(void* param);
+// typedef void	(*mlx_closefunc)(void* param);
 
 // static void	draw_horz_line(mlx_image_t *image, uint32_t y, uint32_t color)
 // {
@@ -37,6 +37,8 @@ typedef void	(*mlx_closefunc)(void* param);
 // 		y++;
 // 	}
 // }
+
+static mlx_image_t* block;
 
 static void	close_func(void *param)
 {
@@ -69,41 +71,51 @@ static mlx_image_t	*ft_draw_rect(mlx_t *mlx, int32_t width, int32_t height, int3
 	return (img);
 }
 
+// static void ft_on_key(void *param)
+// {
+// 	mlx_t* mlx = param;
 
-static void ft_on_key(mlx_key_data_t keydata, void *param)
+// 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+// 	{
+// 			mlx_terminate(mlx);
+// 			ft_printf("Success!\n");
+// 			exit (EXIT_SUCCESS);
+// 	}
+// }
+
+static void ft_on_key(void *param)
 {
-	mlx_t* mlx = param;
+	mlx_t *mlx = param;
 
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 	{
-			mlx_terminate(mlx);
-			ft_printf("Success!\n");
-			exit (EXIT_SUCCESS);
+		ft_printf("Success!\n");
+		mlx_close_window(mlx);
 	}
+	if (mlx_is_key_down(mlx, MLX_KEY_W))
+		block->instances[0].y -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_S))
+		block->instances[0].y += 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
+		block->instances[0].x -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
+		block->instances[0].x += 5;
 }
 
-static void move_on_key(mlx_key_data_t keydata, void *param)
-{
-	mlx_image_t *image = param;
-
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		image->instances[0].y -= 10;
-	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		image->instances[0].y += 10;
-	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		image->instances[0].x -= 10;
-	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		image->instances[0].x += 10;
-}
+// void f(void)
+// {
+// 	system("leaks fdf");
+// }
 
 int	main(void)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*background;
-	mlx_image_t	*block;
-	int32_t	WIDTH = 800;
-	int32_t	HEIGHT = 400;
+	// mlx_image_t	*block;
+	// int32_t		WIDTH = 800;
+	// int32_t		HEIGHT = 400;
 
+	// atexit(f);
 	mlx = mlx_init(WIDTH, HEIGHT, "Hello World!", false);
 	if (!mlx)
 		exit(EXIT_FAILURE);
@@ -115,8 +127,7 @@ int	main(void)
 		exit(EXIT_FAILURE);
 	// draw_horz_line(img, (HEIGHT/2), 0xFF0000FF);
 	// draw_vert_line(img, (WIDTH/2), 0xFF0000FF);
-	mlx_key_hook(mlx, &move_on_key, block);
-	mlx_key_hook(mlx, &ft_on_key, mlx);
+	mlx_loop_hook(mlx, ft_on_key, mlx);
 	mlx_close_hook(mlx, close_func, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

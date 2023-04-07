@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/04/05 11:57:43 by mhaan         ########   odam.nl          #
+#    Updated: 2023/04/07 17:32:58 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L "/Users/$(USE
 HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
 
 SRC_DIR		:=	./src
-SRC			:=	spark.c
+SRC			:=	fdf.c parser_funcs.c utils.c
 
 OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
