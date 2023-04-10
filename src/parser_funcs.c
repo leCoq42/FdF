@@ -6,45 +6,45 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:12:38 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/07 16:57:33 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/10 16:35:18 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-static t_map	*init_map(void);
-
-t_map	*fdf_parse_map(char *filename)
+int		fdf_open_map_file(char *input_file)
 {
-	t_map	*map;
-	char	*line;
-	char	*tmp;
-	int		fd;
+	int	valid;
+	int	fd;
 
-	fd = open(filename, O_RDONLY);
+	valid = ft_strncmp(input_file + ft_strlen(input_file) - 4, ".fdf", 5);
+	if (valid)
+		ft_error("Error: Invalid file extension.");
+	fd = open(input_file, O_RDONLY);
 	if (fd < 0)
-		ft_error();
-	map = init_map();
+		ft_error("Error: invalid fd.");
+	return (fd);
+}
+
+char	**fdf_parse_map_data(fd)
+{
+	char			*tmp;
+	char			*line;
+	char			**map_data;
+	unsigned int	rows;
+
+	rows = 0;
 	tmp = ft_calloc(1, sizeof(char));
 	line = get_next_line(fd);
+	if (!line)
+		ft_error("No data to read!");
 	while (line)
 	{
+		rows++;
 		tmp = gnl_strjoin(tmp, line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->map = ft_split(tmp, ' ');
-	return (free(tmp), map);
-}
-
-
-static t_map	*init_map(void)
-{
-	t_map	*map;
-
-	map = (t_map *)malloc(sizeof(t_map));
-	map->map = NULL;
-	map->width = 0;
-	map->height = 0;
-	return (map);
+	map_data = ft_split(tmp, '\n');
+	return (free(tmp), map_data);
 }

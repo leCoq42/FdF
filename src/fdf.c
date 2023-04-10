@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/07 17:39:10 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/10 18:29:58 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,43 @@
 // 	system("leaks fdf");
 // }
 
-static void	print_map(char **map)
-{
-	int i = 0;
-	while (map[i])
-	{
-		ft_printf("%s ", map[i]);
-		i++;
-	}
-}
 
 int	main(int argc, char **argv)
 {
+	int			fd;
+	char		**map_data;
 	t_map		*map;
-	// mlx_image_t	img;
-	// mlx_t		*mlx;
 
 	// atexit(f);
+	// 1. Basic error check, open map file and check the .fdf extension.
 	if (argc != 2)
 		ft_error("Usage: ./fdf <path_to_map>\n");
-
-	// 1. Parse mapdata from file.
-	map = fdf_parse_map(argv[1]);
-
-	// // 2. Check if mapdata is valid.
-
-	// // 3. Create a MLX instance.
+	fd = fdf_open_map_file(argv[1]);
+	// 2. Parse map data from fd.
+	map_data = fdf_parse_map_data(fd);
+	// 3. Create map
+	map = init_map(map_data);
+	fdf_create_map(&map, map_data);
+	// // 4. Create a MLX instance.
 	// mlx = mlx_init(WIDTH, HEIGHT, "FdF: ’Fil de Fer’", false);
 	// if (!mlx)
 	// 	exit(EXIT_FAILURE);
 
-	// // 4. Create the image and a window to display the iamge.
+	// // 5. Create the image and a window to display the iamge.
 	// img = ft_draw_rect(mlx, WIDTH, HEIGHT, 0xFFFFFFFF);
 	// if (mlx_image_to_window(mlx, img, 0, 0) < 0)
 	// 	exit(EXIT_FAILURE);
 
-	// // 5. Handle user input.
+	// // 6. Handle user input.
 
 
 	// mlx_loop(mlx);
-	// // 6. Exit program.
+	// // 7. Exit program.
 	// mlx_terminate(mlx);
 
 	// Test funcs:
-	print_map(map->map);
+	print_map(map_data);
 	// exit(EXIT_SUCCESS);
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/07 17:42:36 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/10 18:31:04 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,24 @@ typedef struct s_point
 
 typedef struct	s_map
 {
-	int			width;
-	int			height;
-	t_point		*grid;
-	mlx_t		*mlx;
-	mlx_image_t	img;
+	unsigned int	width;
+	unsigned int	height;
+	t_point			**grid;
+	mlx_t			*mlx;
+	mlx_image_t		img;
 }	t_map;
 
 
 
 // Functions:
-t_map	*fdf_parse_map(char *filename);
+int		fdf_open_map_file(char *input_file);
+char	**fdf_parse_map_data(int fd);
+t_map	*init_map(char **map_data);
+void	fdf_create_map(t_map **map, char **map_data);
 void	ft_error(char *s);
 
+
+// Testing funcs:
+void	print_map(char **map);
 
 #endif
