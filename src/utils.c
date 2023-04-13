@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/10 19:00:19 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/13 15:11:36 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,31 @@ void	ft_error(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	print_map(char **map)
+// void	print_map(char **map)
+// {
+// 	int i = 0;
+// 	while (map[i])
+// 	{
+// 		ft_printf("%s\n", map[i]);
+// 		i++;
+// 	}
+// }
+
+void	print_grid(t_point	**grid, t_map *map)
 {
-	int i = 0;
-	while (map[i])
+	unsigned int	x;
+	unsigned int	y;
+
+	y = 0;
+	while (y < (map)->height)
 	{
-		ft_printf("%s\n", map[i]);
-		i++;
+		x = 0;
+		while (x < (map)->width)
+		{
+			ft_printf(" %d", grid[y][x].z);
+			x++;
+		}
+		ft_printf("\n");
+		y++;
 	}
-}
-
-void	print_grid(t_point	**grid)
-{
-
-
-
 }

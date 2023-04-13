@@ -6,13 +6,13 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:12:38 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/10 16:35:18 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/13 15:12:48 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-int		fdf_open_map_file(char *input_file)
+int	fdf_open_map_file(char *input_file)
 {
 	int	valid;
 	int	fd;
@@ -26,7 +26,7 @@ int		fdf_open_map_file(char *input_file)
 	return (fd);
 }
 
-char	**fdf_parse_map_data(fd)
+char	**fdf_parse_map_data(int fd)
 {
 	char			*tmp;
 	char			*line;

@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 16:58:57 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/07 13:50:20 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/13 13:45:37 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 // 	}
 // }
 
-static mlx_image_t* block;
+static mlx_image_t *block;
 
 static void	close_func(void *param)
 {
