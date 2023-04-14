@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/13 13:44:41 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/14 10:52:33 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ t_map	*init_map(char **map_data);
 void	fill_grid(t_map **map, char **map_data);
 void	fdf_create_map(t_map **map, char **map_data);
 void	ft_error(char *s);
-
+void	fdf_draw_image(t_map **map, int32_t color);
+void	draw_line(mlx_image_t *img, int x,int y,int x2, int y2, int color);
 
 // Testing funcs:
 // void	print_map(char **map);

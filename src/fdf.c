@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/13 15:15:39 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/14 13:27:17 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 // 	system("leaks fdf");
 // }
 
-static mlx_image_t	*fdf_draw_rect(mlx_t *mlx, int32_t width, int32_t height, int32_t color);
 
 int	main(int argc, char **argv)
 {
@@ -40,7 +39,7 @@ int	main(int argc, char **argv)
 	if (!map->mlx)
 		exit(EXIT_FAILURE);
 	// // 5. Create the image and a window to display the iamge.
-	map->img = fdf_draw_rect(map->mlx, map->width, map->height, 0xFFFFFFFF);
+	fdf_draw_image(&map, 0x00000000);
 	if (mlx_image_to_window(map->mlx, map->img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	mlx_loop(map->mlx);
@@ -53,25 +52,4 @@ int	main(int argc, char **argv)
 	// print_map(map_data);
 	exit(EXIT_SUCCESS);
 	// return (0);
-}
-
-static mlx_image_t	*fdf_draw_rect(mlx_t *mlx, int32_t width, int32_t height, int32_t color)
-{
-	mlx_image_t	*img;
-	int32_t		x = 0;
-	int32_t		y = 0;
-
-	img = mlx_new_image(mlx, width, height);
-	ft_memset(img->pixels, color, img->width * img->height * sizeof(int32_t));
-	while (x < width)
-	{
-		y = 0;
-		while (y < height)
-		{
-			mlx_put_pixel(img, x, y, color);
-			y++;
-		}
-		x++;
-	}
-	return (img);
 }
