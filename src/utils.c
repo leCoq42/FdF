@@ -6,43 +6,71 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/13 15:11:36 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/17 14:57:13 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-void	ft_error(char *s)
+void	print_map_data(char **map)
 {
-	ft_putstr_fd(s, STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	int i = 0;
+	while (map[i])
+	{
+		ft_printf("%s\n", map[i]);
+		i++;
+	}
 }
 
-// void	print_map(char **map)
-// {
-// 	int i = 0;
-// 	while (map[i])
-// 	{
-// 		ft_printf("%s\n", map[i]);
-// 		i++;
-// 	}
-// }
-
-void	print_grid(t_point	**grid, t_map *map)
+void	print_grid(t_map *map)
 {
 	unsigned int	x;
 	unsigned int	y;
 
 	y = 0;
-	while (y < (map)->height)
+	while (y < map->height)
 	{
 		x = 0;
-		while (x < (map)->width)
+		while (x < map->width)
 		{
-			ft_printf(" %d", grid[y][x].z);
+			ft_printf(" %d", map->grid[y][x].z);
 			x++;
 		}
 		ft_printf("\n");
 		y++;
 	}
+}
+
+size_t	count_rows(char **data)
+{
+	unsigned int	count;
+
+	count = 0;
+	while (data[count])
+		count++;
+	return (count);
+}
+
+size_t	count_columns(char **data)
+{
+	unsigned int	y;
+	char			**points;
+	unsigned int	count;
+	unsigned int	min_width;
+
+	y = 0;
+	while (data[y])
+	{
+		count = 0;
+		points = ft_split(data[y], ' ');
+		while (points[count])
+			count++;
+		if (y == 0)
+			min_width = count;
+		else if (count < min_width)
+			min_width = count;
+		free(points);
+		y++;
+	}
+	return (min_width);
 }
