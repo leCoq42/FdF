@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/17 14:57:13 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/19 15:33:40 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	print_map_data(char **map)
 
 void	print_grid(t_map *map)
 {
-	unsigned int	x;
-	unsigned int	y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < map->height)

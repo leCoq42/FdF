@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/17 15:59:22 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/19 17:29:24 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	// 	ft_error("succes!\n");
 	// print_map_data(map_data);
 	// 4. Create the image and a window to display the iamge.
-	fdf_draw_image(fdf, 0xFFFFFFFF);
+	fdf_draw_image(fdf, 0x00000000);
 	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	mlx_loop(fdf->mlx);

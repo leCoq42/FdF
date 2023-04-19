@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 13:27:31 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/17 14:29:54 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/19 17:18:44 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_point	init_point(int x, int y, int z)
 	point.x = x;
 	point.y = y;
 	point.z = z;
-	point.color = 0;
+	point.color.c = 0xFFFFFFFF;
 	return (point);
 }
 

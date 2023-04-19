@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/17 14:10:51 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/19 16:00:22 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_fdf	*fdf_init(t_fdf *fdf, char **map_data)
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	if (!fdf->img)
 		ft_error("Error with initializing image.\n");
+	ft_memset(fdf->img->pixels, 0x00000000, fdf->img->width * fdf->img->height * sizeof(int32_t));
 	return (fdf);
 }
 
