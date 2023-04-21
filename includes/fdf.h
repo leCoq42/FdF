@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/20 15:36:18 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/21 16:28:48 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 // DEFINES
 # define WIDTH	1920
 # define HEIGHT	1080
-# define SCALE_FACTOR 50
-# define TRANSLATION 100
+# define SCALE_FACTOR 30
+# define TRANSLATION 300
 
 // Structs:
 // typedef struct s_color
@@ -98,12 +98,13 @@ void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
 t_point		isometric_projection(t_point point);
 void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
-void		bresenham_line(mlx_image_t *img, t_point p1, t_point p2);
+void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 void		ft_error(char *s);
 t_color		color_interpolation(t_color c1, t_color c2, float t);
 void		ft_swap(int *a, int *b);
 int			check_borders(t_fdf *fdf, int x, int y);
+void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
 // Testing funcs:
 // void	print_map(char **map);
 void		print_grid(t_map *map);

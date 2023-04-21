@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/20 15:37:40 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/21 16:57:43 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void wu_line(t_fdf *fdf, t_point p1, t_point p2)
         p2.color = temp;
     }
 
-    int dx = p2.x - p1.x;
+	int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
     float gradient = (float)dy / (float)dx;
     float intery = p1.y + gradient;
@@ -67,35 +67,26 @@ void wu_line(t_fdf *fdf, t_point p1, t_point p2)
         float t = (x - p1.x) / (float)dx;
         t_color c = color_interpolation(p1.color, p2.color, t);
 
-		float i1 = 1.0 - (intery - (int)intery);
-		float i2 = intery - (int)intery;
+        float i1 = 1.0 - (intery - (int)intery);
+        float i2 = intery - (int)intery;
 
-
+        c.t_rgba.a = (uint8_t)(i1 * 255);
         if (steep)
-        {
-			if (!(check_borders(fdf, (int)intery, x)) || !(check_borders(fdf, (int)intery + 1, x)))
-			{
-				c.t_rgba.a = (uint8_t)(i1 * 255);
-				mlx_put_pixel(fdf->img, (int)intery, x, c.c);
-				c.t_rgba.a = (uint8_t)(i2 * 255);
-				mlx_put_pixel(fdf->img, (int)intery + 1, x, c.c);
-			}
-        }
+            fdf_put_pixel(fdf, (int)intery, x, c);
         else
-        {
-			if (!(check_borders(fdf, x, (int)intery)) || !(check_borders(fdf, x, (int)intery + 1)))
-			{
-				c.t_rgba.a = (uint8_t)(i1 * 255);
-				mlx_put_pixel(fdf->img, x, (int)intery, c.c);
-				c.t_rgba.a = (uint8_t)(i2 * 255);
-				mlx_put_pixel(fdf->img, x, (int)intery + 1, c.c);
-			}
-        }
+            fdf_put_pixel(fdf, x, (int)intery, c);
+
+        c.t_rgba.a = (uint8_t)(i2 * 255);
+        if (steep)
+            fdf_put_pixel(fdf, (int)intery + 1, x, c);
+        else
+            fdf_put_pixel(fdf, x, (int)intery + 1, c);
+
         intery += gradient;
     }
 }
 
-void bresenham_line(mlx_image_t *img, t_point p1, t_point p2)
+void bresenham_line(t_fdf *fdf, t_point p1, t_point p2)
 {
 	int w = p2.x - p1.x;
 	int h = p2.y - p1.y;
@@ -135,7 +126,7 @@ void bresenham_line(mlx_image_t *img, t_point p1, t_point p2)
 	numerator = longest >> 1;
 	for (int i = 0; i <= longest; i++)
 	{
-		mlx_put_pixel(img, p1.x, p1.y, p1.color.c);
+		fdf_put_pixel(fdf, p1.x, p1.y, p1.color);
 		numerator += shortest;
 		if (!(numerator < longest))
 		{
@@ -149,4 +140,13 @@ void bresenham_line(mlx_image_t *img, t_point p1, t_point p2)
 			p1.y += dy2;
 		}
 	}
+}
+
+void	fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c)
+{
+	if (x < 0 || x > (int)(fdf->img->width))
+		return ;
+	if ( y < 0 || y > (int)(fdf->img->height))
+		return ;
+	mlx_put_pixel(fdf->img, x, y, c.c);
 }

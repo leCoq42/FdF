@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/14 09:48:52 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/20 15:33:52 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/21 16:54:45 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
 	// if (!(check_borders(fdf, p1_proj)) || !(check_borders(fdf, p2_proj)))
 	// 	return ;
 	wu_line(fdf, p1_proj, p2_proj);
-	// t_point	p3_proj = p1_proj;
-	// t_point	p4_proj = p2_proj;
-	// p3_proj.x += 800;
-	// p4_proj.x += 800;
+	t_point	p3_proj = p1_proj;
+	t_point	p4_proj = p2_proj;
+	p3_proj.x += 600;
+	p4_proj.x += 600;
 	// p4_proj.y -= 100;
 	// p3_proj.y -= 100;
-	// if (!(check_borders(fdf, p3_proj)) || !(check_borders(fdf, p4_proj)))
-	// 	return ;
-	// bresenham_line(fdf->img, p3_proj, p4_proj);
+	bresenham_line(fdf, p3_proj, p4_proj);
 }
 
 t_point	isometric_projection(t_point point)
@@ -69,34 +67,4 @@ t_point	isometric_projection(t_point point)
 	// proj.z = point.z;
 	proj.color.c = 0x00FF00FF;
 	return(proj);
-}
-
-// t_point isometric_projection(t_point point)
-// {
-//     const float sqrt3 = sqrtf(3);
-//     t_point pt;
-
-//     pt.x = (point.x - point.y) * sqrt3 / 2;
-//     pt.y = (point.x + point.y) / 2 - point.z;
-// 	pt.z = 0;
-// 	pt.color.c = 0xF0F0F0FF;
-//     return(pt);
-// }
-
-// static int	check_borders(t_fdf *fdf, t_point point)
-// {
-// 	if (point.x > (int)((fdf->img->width) - 2) || point.x < 0)
-// 		return (0);
-// 	if (point.y > (int)((fdf->img->height) - 2) || point.y < 0)
-// 		return (0);
-// 	return (1);
-// }
-
-int	check_borders(t_fdf *fdf, int x, int y)
-{
-	if (x > (int)((fdf->img->width) - 2) || x < 0)
-		return (0);
-	if (y > (int)((fdf->img->height) - 2) || y < 0)
-		return (0);
-	return (1);
 }
