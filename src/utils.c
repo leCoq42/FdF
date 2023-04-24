@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/19 15:33:40 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/24 10:29:41 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,13 @@ size_t	count_columns(char **data)
 		y++;
 	}
 	return (min_width);
+}
+
+void	ft_swap(int *a, int *b)
+{
+	int	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

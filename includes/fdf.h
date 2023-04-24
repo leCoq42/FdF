@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/21 16:28:48 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/24 11:19:27 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ typedef struct s_map
 
 typedef struct s_camera
 {
-	int	x_proj;
-	int	y_proj;
-	int	x_ang;
-	int	y_ang;
-	int	z_ang;
+	float	x_ang;
+	float	y_ang;
+	float	z_ang;
+	int		zoom_factor;
+	int		x_offset;
+	int		y_offset;
 }	t_camera;
 
 typedef struct s_fdf
@@ -96,7 +97,7 @@ size_t		count_rows(char **data);
 size_t		count_columns(char **data);
 void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
-t_point		isometric_projection(t_point point);
+t_point		isometric_projection(t_point point, t_camera *camera);
 void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
@@ -105,6 +106,9 @@ t_color		color_interpolation(t_color c1, t_color c2, float t);
 void		ft_swap(int *a, int *b);
 int			check_borders(t_fdf *fdf, int x, int y);
 void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
+void		ft_on_key(void *param);
+void		ft_swap(int *a, int *b);
+
 // Testing funcs:
 // void	print_map(char **map);
 void		print_grid(t_map *map);

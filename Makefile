@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/04/20 12:07:45 by mhaan         ########   odam.nl          #
+#    Updated: 2023/04/24 11:49:14 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,18 @@ LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L "/Users/$(USE
 HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
 
 SRC_DIR		:=	./src
-SRC			:=	fdf.c init.c point.c camera.c error_funcs.c parser_funcs.c map.c draw.c utils.c line.c
+SRC			:=	fdf.c \
+				init.c \
+				point.c \
+				camera.c \
+				error_funcs.c \
+				parser_funcs.c \
+				map.c draw.c \
+				utils.c \
+				line.c \
+				user_input.c \
+				bresenham_line.c \
+				wu_line.c
 
 OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
