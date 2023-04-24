@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 11:57:16 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/24 13:39:29 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
 	// p4_proj.x += 600;
 	// // p4_proj.y -= 100;
 	// // p3_proj.y -= 100;
-	// bresenham_line(fdf, p1_proj, p2_proj);
+	// bresenham_line(fdf, p3_proj, p4_proj);
 }
 
 
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c)
 {
-	if (x < 0 || x > (int)(fdf->img->width))
+	if (x < 0 || x >= (int)(fdf->img->width))
 		return ;
-	if ( y < 0 || y > (int)(fdf->img->height))
+	if ( y < 0 || y >= (int)(fdf->img->height))
 		return ;
 	mlx_put_pixel(fdf->img, x, y, c.c);
 }

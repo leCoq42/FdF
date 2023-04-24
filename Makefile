@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/04/24 11:49:14 by mhaan         ########   odam.nl          #
+#    Updated: 2023/04/24 12:03:03 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRC			:=	fdf.c \
 				parser_funcs.c \
 				map.c draw.c \
 				utils.c \
-				line.c \
 				user_input.c \
 				bresenham_line.c \
 				wu_line.c
