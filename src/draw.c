@@ -6,20 +6,18 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 13:39:29 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/26 17:33:43 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-
-
-void	fdf_draw_image(t_fdf *fdf, int32_t color)
+void	fdf_draw_image(t_fdf *fdf, int32_t background)
 {
 	int	x;
 	int	y;
 
-	ft_memset(fdf->img->pixels, color, WIDTH * HEIGHT * sizeof(int32_t));
+	ft_memset(fdf->img->pixels, background, WIDTH * HEIGHT * sizeof(int32_t));
 	y = 0;
 	while (y < fdf->map->height)
 	{
@@ -46,10 +44,10 @@ void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
 	wu_line(fdf, p1_proj, p2_proj);
 	// t_point	p3_proj = p1_proj;
 	// t_point	p4_proj = p2_proj;
-	// p3_proj.x += 600;
-	// p4_proj.x += 600;
-	// // p4_proj.y -= 100;
-	// // p3_proj.y -= 100;
+	// p3_proj.x += 300;
+	// p4_proj.x += 300;
+	// p4_proj.y -= 300;
+	// p3_proj.y -= 300;
 	// bresenham_line(fdf, p3_proj, p4_proj);
 }
 

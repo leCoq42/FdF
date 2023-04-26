@@ -6,63 +6,51 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 11:46:42 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 11:50:53 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/26 11:44:01 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-void bresenham_line(t_fdf *fdf, t_point p1, t_point p2)
+static void	calculate_step(int *err, t_point *p1, t_point *d, t_point *s);
+static int	compare(int i, int j);
+
+void	bresenham_line(t_fdf *fdf, t_point p1, t_point p2)
 {
-	int w = p2.x - p1.x;
-	int h = p2.y - p1.y;
-	int longest;
-	int shortest;
-	int numerator;
-	int dx1 = 0;
-	int dy1 = 0;
-	int dx2 = 0;
-	int dy2 = 0;
+	t_point	delta;
+	t_point	sign;
+	int		err[2];
 
-	if (w < 0)
-		dx1 = -1;
-	else if (w > 0)
-		dx1 = 1;
-	if (h < 0)
-		dy1 = -1;
-	else if (h > 0)
-		dy1 = 1;
-	if (w < 0)
-		dx2 = -1;
-	else if (w > 0)
-		dx2 = 1;
-	longest = abs(w);
-	shortest = abs(h);
-
-	if (!(longest > shortest))
-	{
-		longest = abs(h) ;
-		shortest = abs(w) ;
-		if (h < 0)
-			dy2 = -1;
-		else if (h > 0)
-			dy2 = 1;
-	}
-	numerator = longest >> 1;
-	for (int i = 0; i <= longest; i++)
+	delta.x = ft_abs(p2.x - p1.x);
+	delta.y = ft_abs(p2.y - p1.y);
+	sign.x = compare(p1.x, p2.x);
+	sign.y = compare(p1.y, p2.y);
+	err[0] = delta.x - delta.y;
+	while (p1.x != p2.x || p1.y != p2.y)
 	{
 		fdf_put_pixel(fdf, p1.x, p1.y, p1.color);
-		numerator += shortest;
-		if (!(numerator < longest))
-		{
-			numerator -= longest;
-			p1.x += dx1;
-			p1.y += dy1;
-		}
-		else
-		{
-			p1.x += dx2;
-			p1.y += dy2;
-		}
+		calculate_step(err, &p1, &delta, &sign);
 	}
+}
+
+static void	calculate_step(int *err, t_point *p1, t_point *d, t_point *s)
+{
+	err[1] = 2 * err[0];
+	if (err[1] > -d->y)
+	{
+		err[0] -= d->y;
+		p1->x += s->x;
+	}
+	if (err[1] < d->x)
+	{
+		err[0] += d->x;
+		p1->y += s->y;
+	}
+}
+
+static int	compare(int i, int j)
+{
+	if (i < j)
+		return (1);
+	return (-1);
 }

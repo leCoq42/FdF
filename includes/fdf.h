@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 11:19:27 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/26 15:57:33 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,18 @@ typedef struct s_fdf
 	mlx_image_t	*img;
 }	t_fdf;
 
+typedef struct s_line
+{
+	float	grad;
+	float	intery;
+	int		x;
+}	t_line;
+
 // Functions:
 int			fdf_open_map_file(char *input_file);
 char		**fdf_parse_map_data(int fd);
 t_fdf		*fdf_init(t_fdf *fdf, char **map_data);
-void		fdf_draw_image(t_fdf *fdf, int32_t color);
+void		fdf_draw_image(t_fdf *fdf, int32_t background);
 size_t		count_rows(char **data);
 size_t		count_columns(char **data);
 void		fill_grid(t_map *map, char **map_data);
@@ -102,7 +109,6 @@ void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 void		ft_error(char *s);
-t_color		color_interpolation(t_color c1, t_color c2, float t);
 void		ft_swap(int *a, int *b);
 int			check_borders(t_fdf *fdf, int x, int y);
 void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);

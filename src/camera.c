@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 11:28:19 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 11:55:12 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/26 17:44:23 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,23 @@ t_point	isometric_projection(t_point point, t_camera *camera)
 	// proj.z = point.z;
 	proj.color.c = 0xFFFFFFFF;
 	return(proj);
+}
+
+void	rotate_x(int *y, int *z, double alpha)
+{
+	int tmp_y;
+
+	tmp_y = *y;
+	*y = tmp_y * cos(alpha) + *z * sin(alpha);
+	*z = -tmp_y * sin(alpha) + *z * cos(alpha);
+}
+
+void	rotate_y(int *x, int *z, double beta)
+{
+	int tmp_z
+}
+
+void	rotate_z(int *x, int *y, double gamma)
+{
+	int tmp_x
 }
