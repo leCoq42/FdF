@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/24 10:26:41 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/28 17:52:21 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int argc, char **argv)
 
 	// Test leaks:
 	// atexit(f);
-
 	fdf = NULL;
 	// 1. Basic error check, open map file and check the .fdf extension.
 	if (argc != 2)
@@ -37,12 +36,6 @@ int	main(int argc, char **argv)
 	// 3. Create map
 	fdf = fdf_init(fdf, map_data);
 	fdf_create_map(fdf->map, map_data);
-	
-	// To do: free map_data
-	// free_map_data(map_data);
-	// if(!map_data)
-	// 	ft_error("succes!\n");
-	// print_map_data(map_data);
 	// 4. Create the image and a window to display the iamge.
 	fdf_draw_image(fdf, 0x00000000);
 	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
@@ -54,9 +47,7 @@ int	main(int argc, char **argv)
 	// 6. Exit program.
 	mlx_terminate(fdf->mlx);
 	// free_map()
-	// free_map_data()
 	// Test funcs:
 	// print_map(map_data);
 	exit(EXIT_SUCCESS);
-	// return (0);
 }

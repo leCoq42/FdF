@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/26 17:33:43 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/28 17:54:47 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
 
 	p1_proj = isometric_projection(p1, fdf->camera);
 	p2_proj = isometric_projection(p2, fdf->camera);
+	// p2_proj.color.c = 0xFF0000FF;
 	wu_line(fdf, p1_proj, p2_proj);
 	// t_point	p3_proj = p1_proj;
 	// t_point	p4_proj = p2_proj;

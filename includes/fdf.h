@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/26 15:57:33 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/04/28 17:56:29 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@
 # define TRANSLATION 300
 
 // Structs:
-// typedef struct s_color
-// {
-// 	int r;
-// 	int b;
-// 	int g;
-// 	int a;
-// }	t_color;
-
 typedef union color
 {
 	uint32_t	c;
@@ -95,30 +87,36 @@ typedef struct s_line
 	int		x;
 }	t_line;
 
-// Functions:
+// Function headers:
+// parser_funcs.c:
 int			fdf_open_map_file(char *input_file);
 char		**fdf_parse_map_data(int fd);
+// init.c:
 t_fdf		*fdf_init(t_fdf *fdf, char **map_data);
+t_point		init_point(int x, int y, int z, uint32_t c);
+// draw.c:
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
-size_t		count_rows(char **data);
-size_t		count_columns(char **data);
+void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
+void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
+// point.c
 void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
+// camera.c
 t_point		isometric_projection(t_point point, t_camera *camera);
-void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
+// bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
+// wu_line.c:
 void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
+// error_funcs.c
 void		ft_error(char *s);
-void		ft_swap(int *a, int *b);
-int			check_borders(t_fdf *fdf, int x, int y);
-void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
+// user_input.c
 void		ft_on_key(void *param);
-void		ft_swap(int *a, int *b);
-
-// Testing funcs:
-// void	print_map(char **map);
-void		print_grid(t_map *map);
+// utils.c:
 void		print_map_data(char **map);
-void		free_map_data(char **map_data);
+void		print_grid(t_map *map);
+size_t		count_rows(char **data);
+size_t		count_columns(char **data);
+void		ft_swap(int *a, int *b);
+long long	ft_atoi_long(const char *str);
 
 #endif
