@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/28 17:56:29 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/01 16:46:29 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 // DEFINES
 # define WIDTH	1920
 # define HEIGHT	1080
-# define SCALE_FACTOR 30
-# define TRANSLATION 300
+# define SCALE_FACTOR 10
+// # define TRANSLATION 300
 
 // Structs:
 typedef union color
@@ -67,7 +67,7 @@ typedef struct s_camera
 	float	x_ang;
 	float	y_ang;
 	float	z_ang;
-	int		zoom_factor;
+	double	zoom_factor;
 	int		x_offset;
 	int		y_offset;
 }	t_camera;
@@ -110,13 +110,12 @@ void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 // error_funcs.c
 void		ft_error(char *s);
 // user_input.c
-void		ft_on_key(void *param);
+void		user_controls(t_fdf *fdf);
 // utils.c:
 void		print_map_data(char **map);
 void		print_grid(t_map *map);
 size_t		count_rows(char **data);
 size_t		count_columns(char **data);
 void		ft_swap(int *a, int *b);
-long long	ft_atoi_long(const char *str);
 
 #endif

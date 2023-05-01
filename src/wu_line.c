@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/14 09:48:52 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/26 16:09:39 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/01 16:54:15 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	wu_line(t_fdf *fdf, t_point p1, t_point p2)
 		swap_points(&p1, &p2, 0);
 	delta.x = p2.x - p1.x;
 	delta.y = p2.y - p1.y;
-	line.grad = (delta.y / (delta.x + 0.001f));
+	line.grad = (delta.y / (delta.x + 0.1f));
 	line.intery = p1.y + line.grad;
 	line.x = p1.x + 1;
 	while (line.x < p2.x)
@@ -67,7 +67,8 @@ static t_color	color_interpol(t_point p1, t_point p2, int x, t_point delta)
 	t_color	res;
 	float	t;
 
-	t = (x - p1.x) / (delta.x + 0.0001f);
+	t = (x - p1.x) / (delta.x + 0.1f);
+	// t = (x - p1.x) / (delta.x);
 	res.t_rgba.r = p1.color.t_rgba.r + (p2.color.t_rgba.r - p1.color.t_rgba.r) * t + 0.5;
 	res.t_rgba.g = p1.color.t_rgba.g + (p2.color.t_rgba.g - p1.color.t_rgba.g) * t + 0.5;
 	res.t_rgba.b = p1.color.t_rgba.b + (p2.color.t_rgba.b - p1.color.t_rgba.b) * t + 0.5;

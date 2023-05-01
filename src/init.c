@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/28 17:56:16 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/01 14:44:51 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static t_camera *init_camera(t_camera *camera, t_map *map)
 {
 	camera = (t_camera *)ft_calloc(1, sizeof(t_camera));
 
-	camera->x_offset = WIDTH  / 3;
+	camera->x_offset = WIDTH / 3;
 	camera->y_offset = HEIGHT / 3;
-	camera->zoom_factor = WIDTH / (map->width * 2);
+	camera->zoom_factor = WIDTH / (map->width * 3);
 	return (camera);
 }
 

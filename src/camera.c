@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 11:28:19 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/28 17:58:50 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/01 16:45:08 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_point	isometric_projection(t_point point, t_camera *camera)
 {
 	t_point	proj;
 
-	point.x *= camera->zoom_factor;
-	point.y *= camera->zoom_factor;
-	point.z *= camera->zoom_factor;
+	point.x *= round(camera->zoom_factor);
+	point.y *= round(camera->zoom_factor);
+	point.z *= round(camera->zoom_factor);
 	proj.x = (point.x - point.y) * cos(0.523599) + camera->x_offset;
 	proj.y = (-point.z + (point.x + point.y)) * sin(0.523599) + camera->y_offset;
 	proj.color.c = point.color.c;

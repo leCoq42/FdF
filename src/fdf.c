@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/28 17:52:21 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/01 14:22:11 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	// 5. Handle user input.
-	mlx_loop_hook(fdf->mlx, ft_on_key, fdf->mlx);
+	user_controls(fdf);
 	// mlx_close_hook(mlx, close_func, mlx);
 	mlx_loop(fdf->mlx);
 	// 6. Exit program.
