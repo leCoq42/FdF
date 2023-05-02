@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/01 16:57:05 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/02 17:13:26 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,22 @@ void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
 	t_point	p1_proj;
 	t_point	p2_proj;
 
-	p1_proj = isometric_projection(p1, fdf->camera);
-	p2_proj = isometric_projection(p2, fdf->camera);
-	wu_line(fdf, p1_proj, p2_proj);
-	// t_point	p3_proj = p1_proj;
-	// t_point	p4_proj = p2_proj;
-	// p3_proj.x += 900;
-	// p4_proj.x += 900;
-	// // p4_proj.y -= 300;
-	// // p3_proj.y -= 300;
-	// bresenham_line(fdf, p3_proj, p4_proj);
+	p1_proj = isometric_projection(p1, fdf);
+	p2_proj = isometric_projection(p2, fdf);
+	if (p1_proj.x >= 0 && p1_proj.x < WIDTH && p2_proj.x >= 0 && p2_proj.x < WIDTH)
+	{
+		if (p1_proj.y >= 0 && p1_proj.y < HEIGHT && p2_proj.y >= 0 && p2_proj.y < HEIGHT)
+		{
+			wu_line(fdf, p1_proj, p2_proj);
+			// t_point	p3_proj = p1_proj;
+			// t_point	p4_proj = p2_proj;
+			// p3_proj.x += 900;
+			// p4_proj.x += 900;
+			// if (p3_proj.x >= 0 && p3_proj.x < WIDTH && p4_proj.x >= 0 && p4_proj.x < WIDTH)
+			// 	if (p3_proj.y >= 0 && p3_proj.y < HEIGHT && p4_proj.y >= 0 && p4_proj.y < HEIGHT)
+			// 		bresenham_line(fdf, p3_proj, p4_proj);
+		}
+	}
 }
 
 

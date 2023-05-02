@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/01 16:46:29 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/02 16:14:31 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_camera
 	float	x_ang;
 	float	y_ang;
 	float	z_ang;
-	double	zoom_factor;
+	int		zoom_factor;
 	int		x_offset;
 	int		y_offset;
 }	t_camera;
@@ -102,7 +102,7 @@ void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
 void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
 // camera.c
-t_point		isometric_projection(t_point point, t_camera *camera);
+t_point		isometric_projection(t_point point, t_fdf *fdf);
 // bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 // wu_line.c:
