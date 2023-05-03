@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/01 14:22:11 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/03 10:16:13 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // {
 // 	system("leaks fdf");
 // }
-
 
 int	main(int argc, char **argv)
 {
@@ -47,7 +46,5 @@ int	main(int argc, char **argv)
 	// 6. Exit program.
 	mlx_terminate(fdf->mlx);
 	// free_map()
-	// Test funcs:
-	// print_map(map_data);
 	exit(EXIT_SUCCESS);
 }

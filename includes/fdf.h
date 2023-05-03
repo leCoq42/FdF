@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/02 16:14:31 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/03 11:15:06 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define WIDTH	1920
 # define HEIGHT	1080
 # define SCALE_FACTOR 10
+# define RAD 0.01745
 // # define TRANSLATION 300
 
 // Structs:
@@ -64,9 +65,9 @@ typedef struct s_map
 
 typedef struct s_camera
 {
-	float	x_ang;
-	float	y_ang;
-	float	z_ang;
+	double	x_ang;
+	double	y_ang;
+	double	z_ang;
 	int		zoom_factor;
 	int		x_offset;
 	int		y_offset;
@@ -82,8 +83,8 @@ typedef struct s_fdf
 
 typedef struct s_line
 {
-	float	grad;
-	float	intery;
+	double	grad;
+	double	intery;
 	int		x;
 }	t_line;
 
@@ -102,7 +103,7 @@ void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
 void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
 // camera.c
-t_point		isometric_projection(t_point point, t_fdf *fdf);
+t_point		calculate_projection(t_point point, t_fdf *fdf);
 // bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 // wu_line.c:

@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 10:20:30 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/02 17:18:44 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/03 08:56:26 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	ft_on_key(void *param)
 
 	fdf = (t_fdf *)param;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_A))
-		fdf->camera->x_offset += (1 + fdf->camera->zoom_factor);
+		fdf->camera->x_offset += (10 + (fdf->camera->zoom_factor * 0.1));
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_D))
-		fdf->camera->x_offset -= (1 + fdf->camera->zoom_factor);
+		fdf->camera->x_offset -= (10 + (fdf->camera->zoom_factor * 0.1));
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_W))
-		fdf->camera->y_offset += (1 + fdf->camera->zoom_factor);
+		fdf->camera->y_offset += (10 + (fdf->camera->zoom_factor * 0.1));
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_S))
-		fdf->camera->y_offset -= (1 + fdf->camera->zoom_factor);
+		fdf->camera->y_offset -= (10 + (fdf->camera->zoom_factor * 0.1));
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_UP))
 		fdf->camera->zoom_factor++;
 	else if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
