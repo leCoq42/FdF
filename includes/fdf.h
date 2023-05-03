@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/03 11:15:06 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/03 15:52:38 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ typedef struct s_map
 
 typedef struct s_camera
 {
-	double	x_ang;
-	double	y_ang;
-	double	z_ang;
+	double	alpha;
+	double	beta;
+	double	gamma;
 	int		zoom_factor;
 	int		x_offset;
 	int		y_offset;
