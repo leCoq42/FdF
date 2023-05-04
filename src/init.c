@@ -6,14 +6,14 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/03 17:05:45 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/04 11:42:34 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-static t_camera	*init_camera(t_camera *camera, t_map *map);
 static t_map	*init_map(char **map_data);
+static t_camera	*init_camera(t_camera *camera, t_map *map);
 
 t_fdf	*fdf_init(t_fdf *fdf, char **map_data)
 {
@@ -45,23 +45,23 @@ static t_map	*init_map(char **map_data)
 	return (map);
 }
 
-static t_camera *init_camera(t_camera *camera, t_map *map)
+static t_camera	*init_camera(t_camera *camera, t_map *map)
 {
 	camera = (t_camera *)ft_calloc(1, sizeof(t_camera));
-
 	if (WIDTH / map->width < 1 && HEIGHT / map->height < 1)
-		camera->zoom_factor = 1;
+		camera->zoom = 1;
 	else if (WIDTH / (map->width * 3) < HEIGHT / (map->height * 2))
-		camera->zoom_factor = WIDTH / (map->width * 3);
+		camera->zoom = WIDTH / (map->width * 3);
 	else
-		camera->zoom_factor = HEIGHT / (map->height * 2);
-	if (camera->zoom_factor < 2)
-		camera->zoom_factor = 2;
-	camera->x_offset = map->width * camera->zoom_factor * 1.2;
-	camera->y_offset = map->height * camera->zoom_factor * 0.6;
+		camera->zoom = HEIGHT / (map->height * 2);
+	if (camera->zoom < 2)
+		camera->zoom = 2;
+	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
+	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
 	camera->alpha = 0;
 	camera->beta = 0;
 	camera->gamma = 0;
+	camera->pretty = -1;
 	return (camera);
 }
 
@@ -72,6 +72,6 @@ t_point	init_point(int x, int y, int z, uint32_t c)
 	point.x = x;
 	point.y = y;
 	point.z = z;
-	point.color.c = c;
+	point.c.c = c;
 	return (point);
 }

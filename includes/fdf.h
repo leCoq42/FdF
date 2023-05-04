@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/03 15:52:38 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/04 11:29:16 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_point
 	int		x;
 	int		y;
 	int		z;
-	t_color	color;
+	t_color	c;
 }	t_point;
 
 typedef struct s_map
@@ -68,9 +68,10 @@ typedef struct s_camera
 	double	alpha;
 	double	beta;
 	double	gamma;
-	int		zoom_factor;
-	int		x_offset;
-	int		y_offset;
+	int		zoom;
+	int		x_off;
+	int		y_off;
+	int		pretty;
 }	t_camera;
 
 typedef struct s_fdf
@@ -104,6 +105,7 @@ void		fill_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
 // camera.c
 t_point		calculate_projection(t_point point, t_fdf *fdf);
+void		reset_camera(t_camera *camera, t_map *map);
 // bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 // wu_line.c:
@@ -112,6 +114,7 @@ void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 void		ft_error(char *s);
 // user_input.c
 void		user_controls(t_fdf *fdf);
+void		my_keyhooks(mlx_key_data_t keydata, void* param);
 // utils.c:
 void		print_map_data(char **map);
 void		print_grid(t_map *map);

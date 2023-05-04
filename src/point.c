@@ -6,14 +6,14 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 13:27:31 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/03 10:24:38 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/04 11:36:25 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
 static u_int32_t	ft_hextodec(char *hex);
-static	void create_color(uint32_t num, t_color *color);
+static void			create_color(uint32_t num, t_color *color);
 static long long	ft_atoi_long(const char *str);
 
 void	fill_grid(t_map *map, char **map_data)
@@ -29,7 +29,7 @@ void	fill_grid(t_map *map, char **map_data)
 	while (map_data[y])
 	{
 		x = 0;
-		map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
+		map->grid[map->height - y - 1] = (t_point *)ft_calloc(map->width, sizeof(t_point));
 		points = ft_split(map_data[y], ' ');
 		while (points[x])
 		{
@@ -41,7 +41,7 @@ void	fill_grid(t_map *map, char **map_data)
 				color.c = ft_hextodec(point[1]);
 				create_color(color.c, &color);
 			}
-			map->grid[y][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
+			map->grid[map->height - y - 1][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
 			free(point);
 			x++;
 		}
@@ -50,7 +50,7 @@ void	fill_grid(t_map *map, char **map_data)
 	}
 }
 
-static	void create_color(uint32_t num, t_color *color)
+static void	create_color(uint32_t num, t_color *color)
 {
 	color->t_rgba.r = (num >> 16) & 0xFF;
 	color->t_rgba.g = (num >> 8) & 0xFF;
@@ -67,7 +67,7 @@ static uint32_t	ft_hextodec(char *hex)
 	i = 0;
 	if (hex[0] && hex[0] == '0' && hex[1] && (hex[1] == 'x' || hex[1] == 'X'))
 		i += 2;
-	while(hex[i])
+	while (hex[i])
 	{
 		byte = hex[i];
 		if (byte >= '0' && byte <= '9')
@@ -99,7 +99,7 @@ long long	ft_atoi_long(const char *str)
 		str++;
 	while (*str && *str > 47 && *str < 58)
 		val = val * 10 + (*str++ - 48);
-	if (val > (unsigned long long)LLONG_MAX + 1 || (val > LLONG_MAX && sign > 0))
+	if (val > (uint64_t)LLONG_MAX + 1 || (val > LLONG_MAX && sign > 0))
 		ft_error("Error, exceeding long long limit overflow!");
 	return ((long long)(sign * val));
 }

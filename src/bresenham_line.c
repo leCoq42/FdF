@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 11:46:42 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/26 11:44:01 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/04 11:32:54 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	bresenham_line(t_fdf *fdf, t_point p1, t_point p2)
 	err[0] = delta.x - delta.y;
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
-		fdf_put_pixel(fdf, p1.x, p1.y, p1.color);
+		fdf_put_pixel(fdf, p1.x, p1.y, p1.c);
 		calculate_step(err, &p1, &delta, &sign);
 	}
 }
