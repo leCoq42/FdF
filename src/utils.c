@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/28 17:57:48 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:51:57 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,24 @@ void	ft_swap(int *a, int *b)
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
+}
+
+long long	ft_atoi_long(const char *str)
+{
+	unsigned long long	val;
+	int					sign;
+
+	val = 0;
+	sign = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-')
+		sign *= -1;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str && *str > 47 && *str < 58)
+		val = val * 10 + (*str++ - 48);
+	if (val > (uint64_t)LLONG_MAX + 1 || (val > LLONG_MAX && sign > 0))
+		ft_error("Error, exceeding long long limit overflow!");
+	return ((long long)(sign * val));
 }

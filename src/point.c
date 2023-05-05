@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/13 13:27:31 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:36:25 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 16:17:44 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,52 @@
 
 static u_int32_t	ft_hextodec(char *hex);
 static void			create_color(uint32_t num, t_color *color);
-static long long	ft_atoi_long(const char *str);
+static void			fill_grid(char *points, t_map *map);
 
-void	fill_grid(t_map *map, char **map_data)
+void	create_grid(t_map *map, char **map_data)
 {
 	int			x;
 	int			y;
 	char		**points;
-	char		**point;
-	t_color		color;
 
 	y = 0;
 	map->grid = (t_point **)ft_calloc(map->height, sizeof(t_point *));
 	while (map_data[y])
 	{
 		x = 0;
-		map->grid[map->height - y - 1] = (t_point *)ft_calloc(map->width, sizeof(t_point));
+		map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
 		points = ft_split(map_data[y], ' ');
 		while (points[x])
 		{
-			point = ft_split(points[x], ',');
-			if (!point[1])
-				color.c = 0xFFFFFFFF;
-			else
-			{
-				color.c = ft_hextodec(point[1]);
-				create_color(color.c, &color);
-			}
-			map->grid[map->height - y - 1][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
-			free(point);
+			fill_grid(points[x], map);
 			x++;
 		}
 		free(points);
+		y++;
+	}
+}
+
+static void	fill_grid(char *points, t_map *map)
+{
+	static int	x = 0;
+	static int	y = 0;
+	t_color		color;
+	char		**point;
+
+	point = ft_split(points, ',');
+	if (!point[1])
+		color.c = 0xFFFFFFFF;
+	else
+	{
+		color.c = ft_hextodec(point[1]);
+		create_color(color.c, &color);
+	}
+	map->grid[y][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
+	x++;
+	free(point);
+	if (x >= map->width)
+	{
+		x = 0;
 		y++;
 	}
 }
@@ -82,24 +96,4 @@ static uint32_t	ft_hextodec(char *hex)
 		i++;
 	}
 	return (res);
-}
-
-long long	ft_atoi_long(const char *str)
-{
-	unsigned long long	val;
-	int					sign;
-
-	val = 0;
-	sign = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '-')
-		sign *= -1;
-	if (*str == '+' || *str == '-')
-		str++;
-	while (*str && *str > 47 && *str < 58)
-		val = val * 10 + (*str++ - 48);
-	if (val > (uint64_t)LLONG_MAX + 1 || (val > LLONG_MAX && sign > 0))
-		ft_error("Error, exceeding long long limit overflow!");
-	return ((long long)(sign * val));
 }

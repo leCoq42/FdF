@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 10:20:30 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:30:25 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:25:34 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,18 @@ static void	ft_on_key(void *param)
 		fdf->camera->zoom -= 1 + (fdf->camera->zoom * 0.1);
 	if (fdf->camera->zoom < 2)
 		fdf->camera->zoom = 2;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
+		fdf->camera->alpha += 0.1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
+		fdf->camera->alpha -= 0.1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_7))
+		fdf->camera->beta += 0.1;
+	if (mlx_is_key_down(fdf->mlx, MLX_KEY_8))
+		fdf->camera->beta -= 0.1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
 		fdf->camera->gamma += 0.1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->camera->gamma -= 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
-		fdf->camera->beta += 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_3))
-		fdf->camera->beta -= 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_7))
-		fdf->camera->alpha += 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_9))
-		fdf->camera->alpha -= 0.1;
-	// if (fdf->mlx->keydata.key == MLX_KEY_I && fdf->mlx->keydata.action == MLX_PRESS)
-	// {
-	// 	fdf->camera->alpha = 0;
-	// 	fdf->camera->beta = 0;
-	// 	fdf->camera->gamma = 0;
-	// }
 	if (fdf->camera->x_off > WIDTH + fdf->map->width * fdf->camera->zoom)
 		fdf->camera->x_off = 0 - fdf->map->width * fdf->camera->zoom;
 	if (fdf->camera->x_off < 0 - fdf->map->width * fdf->camera->zoom)
@@ -77,8 +71,17 @@ void	my_keyhooks(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 		fdf->camera->pretty *= -1;
 	if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
-	{
 		reset_camera(fdf->camera, fdf->map);
+	if (keydata.key == MLX_KEY_P && keydata.action == MLX_PRESS)
+	{
+		fdf->camera->iso = 0;
+		fdf->camera->alpha = 1.570796;
+		fdf->camera->beta = 0.0;
+		fdf->camera->gamma = 0.0;
+	}
+	if (keydata.key == MLX_KEY_I && keydata.action == MLX_PRESS)
+	{
+		fdf->camera->iso = 1;
 	}
 }
 

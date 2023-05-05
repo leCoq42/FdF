@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:44:12 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 14:41:28 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,30 @@ void	fdf_draw_image(t_fdf *fdf, int32_t background)
 		while (x < fdf->map->width)
 		{
 			if (x < (fdf->map->width) - 1)
-				draw_iso_line(fdf, fdf->map->grid[y][x], fdf->map->grid[y][x + 1]);
+				draw_line(fdf, fdf->map->grid[y][x], fdf->map->grid[y][x + 1]);
 			if (y < (fdf->map->height) - 1)
-				draw_iso_line(fdf, fdf->map->grid[y][x], fdf->map->grid[y + 1][x]);
+				draw_line(fdf, fdf->map->grid[y][x], fdf->map->grid[y + 1][x]);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_iso_line(t_fdf *fdf, t_point p1, t_point p2)
+void	draw_line(t_fdf *fdf, t_point p1, t_point p2)
 {
-	t_point	p1_proj;
-	t_point	p2_proj;
+	t_point	p1_p;
+	t_point	p2_p;
 
-	p1_proj = calculate_projection(p1, fdf);
-	p2_proj = calculate_projection(p2, fdf);
-	if (p1_proj.x >= 0 && p1_proj.x < WIDTH && p2_proj.x >= 0 && p2_proj.x < WIDTH)
+	p1_p = calculate_projection(p1, fdf);
+	p2_p = calculate_projection(p2, fdf);
+	if (p1_p.x >= 0 && p1_p.x < WIDTH && p2_p.x >= 0 && p2_p.x < WIDTH)
 	{
-		if (p1_proj.y >= 0 && p1_proj.y < HEIGHT && p2_proj.y >= 0 && p2_proj.y < HEIGHT)
+		if (p1_p.y >= 0 && p1_p.y < HEIGHT && p2_p.y >= 0 && p2_p.y < HEIGHT)
 		{
 			if (fdf->camera->pretty > 0)
-				wu_line(fdf, p1_proj, p2_proj);
+				wu_line(fdf, p1_p, p2_p);
 			else
-				bresenham_line(fdf, p1_proj, p2_proj);
+				bresenham_line(fdf, p1_p, p2_p);
 		}
 	}
 }

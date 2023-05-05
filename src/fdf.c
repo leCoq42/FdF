@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 10:58:27 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:46:28 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	// 5. Handle user input.
 	user_controls(fdf);
+	put_menu(fdf);
 	mlx_key_hook(fdf->mlx, &my_keyhooks, fdf);
 	// mlx_close_hook(mlx, close_func, mlx);
 	mlx_loop(fdf->mlx);

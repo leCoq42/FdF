@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:29:16 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:18:10 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_camera
 	int		x_off;
 	int		y_off;
 	int		pretty;
+	int		iso;
 }	t_camera;
 
 typedef struct s_fdf
@@ -98,10 +99,10 @@ t_fdf		*fdf_init(t_fdf *fdf, char **map_data);
 t_point		init_point(int x, int y, int z, uint32_t c);
 // draw.c:
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
-void		draw_iso_line(t_fdf *fdf, t_point p1, t_point p2);
+void		draw_line(t_fdf *fdf, t_point p1, t_point p2);
 void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
 // point.c
-void		fill_grid(t_map *map, char **map_data);
+void		create_grid(t_map *map, char **map_data);
 void		fdf_create_map(t_map *map, char **map_data);
 // camera.c
 t_point		calculate_projection(t_point point, t_fdf *fdf);
@@ -115,11 +116,14 @@ void		ft_error(char *s);
 // user_input.c
 void		user_controls(t_fdf *fdf);
 void		my_keyhooks(mlx_key_data_t keydata, void* param);
+// menu.c:
+void	put_menu(t_fdf *fdf);
 // utils.c:
 void		print_map_data(char **map);
 void		print_grid(t_map *map);
 size_t		count_rows(char **data);
 size_t		count_columns(char **data);
 void		ft_swap(int *a, int *b);
+long long	ft_atoi_long(const char *str);
 
 #endif

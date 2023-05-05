@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:42:34 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:43:09 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_fdf	*fdf_init(t_fdf *fdf, char **map_data)
 	fdf->img = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	if (!fdf->img)
 		ft_error("Error with initializing image.\n");
-	ft_bzero(fdf->img->pixels, fdf->img->width * fdf->img->height * sizeof(int32_t));
+	ft_bzero(fdf->img->pixels, fdf->img->width * fdf->img->height \
+				* sizeof(int32_t));
 	return (fdf);
 }
 
@@ -62,6 +63,7 @@ static t_camera	*init_camera(t_camera *camera, t_map *map)
 	camera->beta = 0;
 	camera->gamma = 0;
 	camera->pretty = -1;
+	camera->iso = 0;
 	return (camera);
 }
 

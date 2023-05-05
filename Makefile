@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/04/28 14:32:29 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/05 13:02:54 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRC			:=	fdf.c \
 				utils.c \
 				user_input.c \
 				bresenham_line.c \
-				wu_line.c
+				wu_line.c \
+				menu.c
 
 OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))

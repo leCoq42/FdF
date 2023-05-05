@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 11:28:19 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:39:46 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/05 15:40:51 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,27 @@ static void	rotate_z(int *x, int *y, double gamma);
 t_point	calculate_projection(t_point point, t_fdf *fdf)
 {
 	t_point	proj;
-	// double alpha = 0.785;
-	// double beta = 0.615;
-	// double gamma = 0.615;
 
 	proj = init_point(point.x, point.y, point.z, point.c.c);
 	proj.x *= fdf->camera->zoom;
 	proj.y *= fdf->camera->zoom;
-	proj.z *= fdf->camera->zoom;
-	// proj.z *= (1 + fdf->camera->zoom_factor * 0.5);
-	// if (2 < 1)
+	proj.z *= (fdf->camera->zoom * 0.5);
+	if (fdf->camera->iso)
+	{
+		proj.x = (proj.x - proj.y) * cos(0.523599);
+		proj.y = -proj.z + (proj.x + proj.y) * sin(0.523599);
+	}
+	else
+	{
 		rotate_x(&proj.y, &proj.z, fdf->camera->alpha);
-	// if (2 < 1)
 		rotate_y(&proj.x, &proj.z, fdf->camera->beta);
-	// if (2 < 1)
 		rotate_z(&proj.x, &proj.y, fdf->camera->gamma);
-	// proj.x = (proj.x - proj.y) * cos(0.523599);
+	}
 	proj.x += fdf->camera->x_off;
+	proj.y += fdf->camera->y_off;
 	// if (proj.x > WIDTH || proj.x < 0)
 	// 	proj.y = 0;
 	// else
-	// 	proj.y = (-proj.z + (proj.x + proj.y)) * sin(0.523599);
-	proj.y += fdf->camera->y_off;
 	return (proj);
 }
 
@@ -84,7 +83,7 @@ void	reset_camera(t_camera *camera, t_map *map)
 	camera->alpha = 0;
 	camera->beta = 0;
 	camera->gamma = 0;
-	camera->pretty = -1;
-	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom)/2;
-	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom)/2;
+	camera->iso = 0;
+	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
+	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
 }
