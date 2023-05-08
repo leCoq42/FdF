@@ -6,21 +6,18 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 16:54:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 15:51:57 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 17:12:32 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-void	print_map_data(char **map)
+void	print_map_data(t_list *map_data)
 {
-	int	i;
-
-	i = 0;
-	while (map[i])
+	while (map_data)
 	{
-		ft_printf("%s\n", map[i]);
-		i++;
+		ft_printf("%s", map_data->content);
+		map_data = map_data->next;
 	}
 }
 
@@ -43,39 +40,51 @@ void	print_grid(t_map *map)
 	}
 }
 
-size_t	count_rows(char **data)
+size_t	fdf_count_rows(t_list *map_data)
 {
 	unsigned int	count;
+	t_list			*ptr;
 
 	count = 0;
-	while (data[count])
+	ptr = map_data;
+	while (ptr)
+	{
 		count++;
+		ptr = ptr->next;
+	}
 	return (count);
 }
 
-size_t	count_columns(char **data)
-{
-	unsigned int	y;
-	char			**points;
-	unsigned int	count;
-	unsigned int	min_width;
+// size_t	fdf_count_columns(t_list *map_data)
+// {
+// 	t_list	*ptr;
+// 	size_t	count;
+// 	size_t	min_width;
 
-	y = 0;
-	while (data[y])
-	{
-		count = 0;
-		points = ft_split(data[y], ' ');
-		while (points[count])
-			count++;
-		if (y == 0)
-			min_width = count;
-		else if (count < min_width)
-			min_width = count;
-		free(points);
-		y++;
-	}
-	return (min_width);
-}
+// 	ptr = map_data;
+// 	min_width = 0;
+// 	print_map_data(map_data);
+// 	while (ptr)
+// 	{
+// 		count = 0;
+// 		while (ptr->content && (char)ptr->content == ' ')
+// 			(char *)ptr->content++;
+// 		printf("%c\n", (char)ptr->content);
+// 		// while (ptr->content)
+// 		// {
+// 		// 	printf("%c\n", (char)ptr->content);
+// 		// 	if (ft_strchr(" \n", (char)ptr->content))
+// 		// 		count++;
+// 		// 	ptr->content++;
+// 		// }
+// 		if (min_width == 0)
+// 			min_width = count;
+// 		else if (count < min_width)
+// 			min_width = count;
+// 		ptr = ptr->next;
+// 	}
+// 	return (min_width);
+// }
 
 void	ft_swap(int *a, int *b)
 {

@@ -6,35 +6,87 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 15:48:39 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 09:56:29 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 16:20:23 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-static void	free_map_data(char ***map_data);
+static void			fill_grid(char *points, t_map *map);
+static int			count_splits(char **array);
 
-void	fdf_create_map(t_map *map, char **map_data)
+void	fdf_create_map(t_map *map, t_list *map_data)
 {
 	// print_map_data(map_data);
 	create_grid(map, map_data);
-	ft_printf("Height = %u\n", map->height);
-	ft_printf("Width = %u\n", map->width);
-	free_map_data(&map_data);
-	if (map_data)
-		ft_error("Error with freeing!\n");
+	ft_printf("Height = %i\n", map->height);
+	ft_printf("Width = %i\n", map->width);
 }
 
-static void	free_map_data(char ***map_data)
+void	create_grid(t_map *map, t_list *map_data)
 {
-	int	i;
+	int			x;
+	int			y;
+	int			width;
+	t_list		*ptr;
+	char		**points;
 
-	i = 0;
-	while ((*map_data)[i])
+	y = 0;
+	ptr = map_data;
+	map->grid = (t_point **)ft_calloc(map->height, sizeof(t_point *));
+	while (ptr)
 	{
-		free((*map_data)[i]);
-		i++;
+		x = 0;
+		points = ft_split(ptr->content, ' ');
+		width = count_splits(points);
+		if (map->width == 0 || width < map->width)
+			map->width = width;
+		map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
+		while (points[x])
+		{
+			fill_grid(points[x], map);
+			free(points[x]);
+			x++;
+		}
+		free(points);
+		y++;
+		ptr = ptr->next;
 	}
-	free(*map_data);
-	*map_data = NULL;
+}
+
+static void	fill_grid(char *points, t_map *map)
+{
+	static int	x = 0;
+	static int	y = 0;
+	t_color		color;
+	char		**point;
+
+	point = ft_split(points, ',');
+	if (!point[1])
+		color.c = 0xFFFFFFFF;
+	else
+	{
+		color.c = ft_hextodec(point[1]);
+		create_color(color.c, &color);
+	}
+	map->grid[y][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
+	x++;
+	free(point);
+	if (x >= map->width)
+	{
+		x = 0;
+		y++;
+	}
+}
+
+static int	count_splits(char **array)
+{
+	int	count;
+
+	count = 0;
+	if (!array)
+		return (count);
+	while (array[count])
+		count++;
+	return (count);
 }

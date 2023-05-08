@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 10:43:10 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 14:41:28 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 17:49:17 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fdf_draw_image(t_fdf *fdf, int32_t background)
 	int	x;
 	int	y;
 
-	ft_memset(fdf->img->pixels, background, WIDTH * HEIGHT * sizeof(int32_t));
+	ft_memset(fdf->img->pixels, background, HEIGHT * WIDTH * sizeof(int32_t));
 	y = 0;
 	while (y < fdf->map->height)
 	{
@@ -41,9 +41,9 @@ void	draw_line(t_fdf *fdf, t_point p1, t_point p2)
 
 	p1_p = calculate_projection(p1, fdf);
 	p2_p = calculate_projection(p2, fdf);
-	if (p1_p.x >= 0 && p1_p.x < WIDTH && p2_p.x >= 0 && p2_p.x < WIDTH)
+	if (p1_p.x >= 0 && p1_p.x < (int)fdf->img->width && p2_p.x >= 0 && p2_p.x < (int)fdf->img->width)
 	{
-		if (p1_p.y >= 0 && p1_p.y < HEIGHT && p2_p.y >= 0 && p2_p.y < HEIGHT)
+		if (p1_p.y >= 0 && p1_p.y < (int)fdf->img->height && p2_p.y >= 0 && p2_p.y < (int)fdf->img->height)
 		{
 			if (fdf->camera->pretty > 0)
 				wu_line(fdf, p1_p, p2_p);

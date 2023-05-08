@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:12:38 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/04/13 15:12:48 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 15:32:41 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,30 @@ int	fdf_open_map_file(char *input_file)
 	return (fd);
 }
 
-char	**fdf_parse_map_data(int fd)
+t_list	*fdf_parse_map_data(int fd)
 {
-	char			*tmp;
-	char			*line;
-	char			**map_data;
-	unsigned int	rows;
+	char	*line;
+	t_list	*node;
+	t_list	*last;
+	t_list	*head;
 
-	rows = 0;
-	tmp = ft_calloc(1, sizeof(char));
+	head = NULL;
 	line = get_next_line(fd);
 	if (!line)
 		ft_error("No data to read!");
 	while (line)
 	{
-		rows++;
-		tmp = gnl_strjoin(tmp, line);
-		free(line);
+		node = ft_lstnew((char *)line);
+		if (!node)
+			ft_error("Error with parsing data.");
+		if (!head)
+		{
+			ft_lstadd_back(&head, node);
+			last = head;
+		}
+		else
+			ft_lstadd_back(&last, node);
 		line = get_next_line(fd);
 	}
-	map_data = ft_split(tmp, '\n');
-	return (free(tmp), map_data);
+	return (head);
 }

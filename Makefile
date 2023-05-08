@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/05 13:02:54 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/08 16:17:54 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
 SRC_DIR		:=	./src
 SRC			:=	fdf.c \
 				init.c \
-				point.c \
 				camera.c \
 				error_funcs.c \
 				parser_funcs.c \
@@ -38,7 +37,8 @@ SRC			:=	fdf.c \
 				user_input.c \
 				bresenham_line.c \
 				wu_line.c \
-				menu.c
+				menu.c \
+				color.c \
 
 OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))

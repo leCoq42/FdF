@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 10:20:30 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 15:25:34 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 10:48:36 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	my_keyhooks(mlx_key_data_t keydata, void *param)
 	{
 		fdf->camera->iso = 1;
 	}
+	if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
+		center_camera(fdf->camera, fdf->map);
 }
 
 static void	close_mlx(void *param)

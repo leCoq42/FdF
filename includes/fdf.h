@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 15:18:10 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 17:22:50 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@
 # define HEIGHT	1080
 # define SCALE_FACTOR 10
 # define RAD 0.01745
-// # define TRANSLATION 300
 
 // Structs:
+
 typedef union color
 {
 	uint32_t	c;
@@ -93,20 +93,23 @@ typedef struct s_line
 // Function headers:
 // parser_funcs.c:
 int			fdf_open_map_file(char *input_file);
-char		**fdf_parse_map_data(int fd);
+t_list		*fdf_parse_map_data(int fd);
+// char		**fdf_parse_map_data(int fd);
 // init.c:
-t_fdf		*fdf_init(t_fdf *fdf, char **map_data);
+t_fdf		*fdf_init(t_fdf *fdf, t_list *map_data);
 t_point		init_point(int x, int y, int z, uint32_t c);
+t_camera	*init_camera(t_camera *camera, t_map *map);
 // draw.c:
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
 void		draw_line(t_fdf *fdf, t_point p1, t_point p2);
 void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
-// point.c
-void		create_grid(t_map *map, char **map_data);
-void		fdf_create_map(t_map *map, char **map_data);
+// map.c
+void		create_grid(t_map *map, t_list *map_data);
+void		fdf_create_map(t_map *map, t_list *map_data);
 // camera.c
 t_point		calculate_projection(t_point point, t_fdf *fdf);
 void		reset_camera(t_camera *camera, t_map *map);
+void		center_camera(t_camera *camera, t_map *map);
 // bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 // wu_line.c:
@@ -117,12 +120,14 @@ void		ft_error(char *s);
 void		user_controls(t_fdf *fdf);
 void		my_keyhooks(mlx_key_data_t keydata, void* param);
 // menu.c:
-void	put_menu(t_fdf *fdf);
+void		put_menu(t_fdf *fdf);
+// color.c:
+void		create_color(uint32_t num, t_color *color);
+uint32_t	ft_hextodec(char *hex);
 // utils.c:
-void		print_map_data(char **map);
+void		print_map_data(t_list *map);
 void		print_grid(t_map *map);
-size_t		count_rows(char **data);
-size_t		count_columns(char **data);
+size_t		fdf_count_rows(t_list *map_data);
 void		ft_swap(int *a, int *b);
 long long	ft_atoi_long(const char *str);
 

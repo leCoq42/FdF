@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 11:28:19 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/05 15:40:51 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/08 17:09:57 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	rotate_x(int *y, int *z, double alpha);
 static void	rotate_y(int *x, int *z, double beta);
 static void	rotate_z(int *x, int *y, double gamma);
+static void	iso_projection(t_point *proj);
 
 t_point	calculate_projection(t_point point, t_fdf *fdf)
 {
@@ -24,23 +25,28 @@ t_point	calculate_projection(t_point point, t_fdf *fdf)
 	proj.x *= fdf->camera->zoom;
 	proj.y *= fdf->camera->zoom;
 	proj.z *= (fdf->camera->zoom * 0.5);
+	proj.x -= (fdf->map->width * fdf->camera->zoom) / 2;
+	proj.y -= (fdf->map->height * fdf->camera->zoom) / 2;
 	if (fdf->camera->iso)
-	{
-		proj.x = (proj.x - proj.y) * cos(0.523599);
-		proj.y = -proj.z + (proj.x + proj.y) * sin(0.523599);
-	}
+		iso_projection(&proj);
 	else
 	{
 		rotate_x(&proj.y, &proj.z, fdf->camera->alpha);
 		rotate_y(&proj.x, &proj.z, fdf->camera->beta);
 		rotate_z(&proj.x, &proj.y, fdf->camera->gamma);
 	}
-	proj.x += fdf->camera->x_off;
-	proj.y += fdf->camera->y_off;
-	// if (proj.x > WIDTH || proj.x < 0)
-	// 	proj.y = 0;
-	// else
+	proj.x += WIDTH / 2 + fdf->camera->x_off;
+	proj.y += HEIGHT / 2 + fdf->camera->y_off;
 	return (proj);
+}
+
+static void	iso_projection(t_point *proj)
+{
+	int	old_x;
+
+	old_x = proj->x;
+	proj->x = (proj->x - proj->y) * cos(0.523599);
+	proj->y = (-proj->z + (old_x + proj->y) * sin(0.523599));
 }
 
 static void	rotate_x(int *y, int *z, double alpha)
@@ -84,6 +90,12 @@ void	reset_camera(t_camera *camera, t_map *map)
 	camera->beta = 0;
 	camera->gamma = 0;
 	camera->iso = 0;
+	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
+	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
+}
+
+void	center_camera(t_camera *camera, t_map *map)
+{
 	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
 	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
 }
