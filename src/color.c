@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 16:06:03 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 17:10:07 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 17:06:10 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ uint32_t	ft_hextodec(char *hex)
 	i = 0;
 	if (hex[0] && hex[0] == '0' && hex[1] && (hex[1] == 'x' || hex[1] == 'X'))
 		i += 2;
-	while (hex[i])
+	while (hex[i] && hex[i] != '\n')
 	{
 		byte = hex[i];
 		if (byte >= '0' && byte <= '9')
@@ -39,7 +39,7 @@ uint32_t	ft_hextodec(char *hex)
 		else if (byte >= 'A' && byte <= 'F')
 			byte = byte - 'A' + 10;
 		else
-			return (0);
+			ft_error("Error: invalid collor code.\n") ;
 		res = (res << 4) | (byte & 0xF);
 		i++;
 	}

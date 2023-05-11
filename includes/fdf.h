@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 17:22:50 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 14:06:54 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_list		*fdf_parse_map_data(int fd);
 // init.c:
 t_fdf		*fdf_init(t_fdf *fdf, t_list *map_data);
 t_point		init_point(int x, int y, int z, uint32_t c);
-t_camera	*init_camera(t_camera *camera, t_map *map);
+t_camera	*init_camera(t_camera *camera, t_map *map, mlx_image_t *img);
 // draw.c:
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
 void		draw_line(t_fdf *fdf, t_point p1, t_point p2);
@@ -108,8 +108,8 @@ void		create_grid(t_map *map, t_list *map_data);
 void		fdf_create_map(t_map *map, t_list *map_data);
 // camera.c
 t_point		calculate_projection(t_point point, t_fdf *fdf);
-void		reset_camera(t_camera *camera, t_map *map);
-void		center_camera(t_camera *camera, t_map *map);
+void		reset_camera(t_camera *camera, t_map *map, mlx_image_t *img);
+void		center_camera(t_camera *camera, t_map *map, mlx_image_t *img);
 // bresenham_line.c
 void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 // wu_line.c:

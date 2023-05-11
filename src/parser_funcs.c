@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:12:38 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 15:32:41 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 14:39:26 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	fdf_open_map_file(char *input_file)
 
 	valid = ft_strncmp(input_file + ft_strlen(input_file) - 4, ".fdf", 5);
 	if (valid)
-		ft_error("Error: Invalid file extension.");
+		ft_error("Error: Invalid file extension.\n");
 	fd = open(input_file, O_RDONLY);
 	if (fd < 0)
-		ft_error("Error: invalid fd.");
+		ft_error("Error: invalid fd.\n");
 	return (fd);
 }
 
@@ -41,7 +41,7 @@ t_list	*fdf_parse_map_data(int fd)
 	{
 		node = ft_lstnew((char *)line);
 		if (!node)
-			ft_error("Error with parsing data.");
+			ft_error("Error with parsing data.\n");
 		if (!head)
 		{
 			ft_lstadd_back(&head, node);

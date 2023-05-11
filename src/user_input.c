@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 10:20:30 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 10:48:36 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 13:57:43 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ static void	ft_on_key(void *param)
 		fdf->camera->gamma += 0.1;
 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
 		fdf->camera->gamma -= 0.1;
-	if (fdf->camera->x_off > WIDTH + fdf->map->width * fdf->camera->zoom)
+	if (fdf->camera->x_off > (int)(fdf->img->width + fdf->map->width * fdf->camera->zoom))
 		fdf->camera->x_off = 0 - fdf->map->width * fdf->camera->zoom;
 	if (fdf->camera->x_off < 0 - fdf->map->width * fdf->camera->zoom)
-		fdf->camera->x_off = WIDTH + fdf->map->width * fdf->camera->zoom;
-	if (fdf->camera->y_off > HEIGHT + fdf->map->height * fdf->camera->zoom)
+		fdf->camera->x_off = fdf->img->width + fdf->map->width * fdf->camera->zoom;
+	if (fdf->camera->y_off > (int)(fdf->img->height + fdf->map->height * fdf->camera->zoom))
 		fdf->camera->y_off = 0 - fdf->map->height * fdf->camera->zoom;
 	if (fdf->camera->y_off < 0 - fdf->map->height * fdf->camera->zoom)
-		fdf->camera->y_off = HEIGHT + fdf->map->height * fdf->camera->zoom;
+		fdf->camera->y_off = fdf->img->height + fdf->map->height * fdf->camera->zoom;
 	fdf_draw_image(fdf, 0x00000000);
 }
 
@@ -71,7 +71,7 @@ void	my_keyhooks(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
 		fdf->camera->pretty *= -1;
 	if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
-		reset_camera(fdf->camera, fdf->map);
+		reset_camera(fdf->camera, fdf->map, fdf->img);
 	if (keydata.key == MLX_KEY_P && keydata.action == MLX_PRESS)
 	{
 		fdf->camera->iso = 0;
@@ -84,7 +84,7 @@ void	my_keyhooks(mlx_key_data_t keydata, void *param)
 		fdf->camera->iso = 1;
 	}
 	if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
-		center_camera(fdf->camera, fdf->map);
+		center_camera(fdf->camera, fdf->map, fdf->img);
 }
 
 static void	close_mlx(void *param)

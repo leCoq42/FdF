@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 11:28:19 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 17:09:57 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 14:24:56 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_point	calculate_projection(t_point point, t_fdf *fdf)
 	proj.x *= fdf->camera->zoom;
 	proj.y *= fdf->camera->zoom;
 	proj.z *= (fdf->camera->zoom * 0.5);
-	proj.x -= (fdf->map->width * fdf->camera->zoom) / 2;
-	proj.y -= (fdf->map->height * fdf->camera->zoom) / 2;
 	if (fdf->camera->iso)
 		iso_projection(&proj);
 	else
@@ -35,8 +33,8 @@ t_point	calculate_projection(t_point point, t_fdf *fdf)
 		rotate_y(&proj.x, &proj.z, fdf->camera->beta);
 		rotate_z(&proj.x, &proj.y, fdf->camera->gamma);
 	}
-	proj.x += WIDTH / 2 + fdf->camera->x_off;
-	proj.y += HEIGHT / 2 + fdf->camera->y_off;
+	proj.x += fdf->camera->x_off;
+	proj.y += fdf->camera->y_off;
 	return (proj);
 }
 
@@ -76,26 +74,25 @@ static void	rotate_z(int *x, int *y, double gamma)
 	*y = old_x * sin(gamma) + *y * cos(gamma);
 }
 
-void	reset_camera(t_camera *camera, t_map *map)
+void	reset_camera(t_camera *camera, t_map *map, mlx_image_t *img)
 {
-	if (WIDTH / map->width < 1 && HEIGHT / map->height < 1)
-		camera->zoom = 1;
-	else if (WIDTH / (map->width * 3) < HEIGHT / (map->height * 2))
-		camera->zoom = WIDTH / (map->width * 3);
+	if (img->width / (map->width * 3) < img->height / (map->height * 2))
+		camera->zoom = img->width / (map->width * 3);
 	else
-		camera->zoom = HEIGHT / (map->height * 2);
+		camera->zoom = img->height / (map->height * 2);
 	if (camera->zoom < 2)
 		camera->zoom = 2;
+	camera->x_off = (img->width / 2) - (map->width * camera->zoom) / 2;
+	camera->y_off = (img->height / 2) - (map->height * camera->zoom) / 2;
 	camera->alpha = 0;
 	camera->beta = 0;
 	camera->gamma = 0;
+	camera->pretty = -1;
 	camera->iso = 0;
-	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
-	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
 }
 
-void	center_camera(t_camera *camera, t_map *map)
+void	center_camera(t_camera *camera, t_map *map, mlx_image_t *img)
 {
-	camera->x_off = (WIDTH / 2) - (map->width * camera->zoom) / 2;
-	camera->y_off = (HEIGHT / 2) - (map->height * camera->zoom) / 2;
+	camera->x_off = (img->width / 2) - (map->width * camera->zoom) / 2;
+	camera->y_off = (img->height / 2) - (map->height * camera->zoom) / 2;
 }

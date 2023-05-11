@@ -6,22 +6,14 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 15:48:39 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/08 16:20:23 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/11 17:05:23 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-static void			fill_grid(char *points, t_map *map);
+static void			fill_grid(char *point, t_map *map);
 static int			count_splits(char **array);
-
-void	fdf_create_map(t_map *map, t_list *map_data)
-{
-	// print_map_data(map_data);
-	create_grid(map, map_data);
-	ft_printf("Height = %i\n", map->height);
-	ft_printf("Width = %i\n", map->width);
-}
 
 void	create_grid(t_map *map, t_list *map_data)
 {
@@ -34,6 +26,8 @@ void	create_grid(t_map *map, t_list *map_data)
 	y = 0;
 	ptr = map_data;
 	map->grid = (t_point **)ft_calloc(map->height, sizeof(t_point *));
+	if (!map->grid)
+			ft_error("Error: unsuccesful malloc.");
 	while (ptr)
 	{
 		x = 0;
@@ -42,7 +36,9 @@ void	create_grid(t_map *map, t_list *map_data)
 		if (map->width == 0 || width < map->width)
 			map->width = width;
 		map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
-		while (points[x])
+		if (!map->grid[y])
+			ft_error("Error: unsuccesful malloc.");
+		while (x < map->width)
 		{
 			fill_grid(points[x], map);
 			free(points[x]);
@@ -54,24 +50,26 @@ void	create_grid(t_map *map, t_list *map_data)
 	}
 }
 
-static void	fill_grid(char *points, t_map *map)
+static void	fill_grid(char *point, t_map *map)
 {
 	static int	x = 0;
 	static int	y = 0;
 	t_color		color;
-	char		**point;
+	char		**data;
 
-	point = ft_split(points, ',');
-	if (!point[1])
+	data = ft_split(point, ',');
+	ft_bzero(&color, sizeof(t_color));
+	if (!data[1])
 		color.c = 0xFFFFFFFF;
 	else
 	{
-		color.c = ft_hextodec(point[1]);
+		color.c = ft_hextodec(data[1]);
 		create_color(color.c, &color);
+		printf("%u\n", color.c);
 	}
-	map->grid[y][x] = init_point(x, y, ft_atoi_long(point[0]), color.c);
+	map->grid[y][x] = init_point(x, y, ft_atoi(data[0]), color.c);
 	x++;
-	free(point);
+	free(data);
 	if (x >= map->width)
 	{
 		x = 0;
