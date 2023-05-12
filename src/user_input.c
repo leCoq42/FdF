@@ -6,22 +6,25 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/24 10:20:30 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/11 13:57:43 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 16:44:02 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
 static void	close_mlx(void *param);
-static void	ft_on_key(void *param);
+static void	cam_movement_hooks(void *param);
+static void	my_keyhooks(mlx_key_data_t keydata, void *param);
 
 void	user_controls(t_fdf *fdf)
 {
+	mlx_loop_hook(fdf->mlx, &cam_movement_hooks, fdf);
+	mlx_loop_hook(fdf->mlx, &cam_rotation_hooks, fdf);
+	mlx_key_hook(fdf->mlx, &my_keyhooks, fdf);
 	mlx_loop_hook(fdf->mlx, &close_mlx, fdf);
-	mlx_loop_hook(fdf->mlx, &ft_on_key, fdf);
 }
 
-static void	ft_on_key(void *param)
+static void	cam_movement_hooks(void *param)
 {
 	t_fdf	*fdf;
 
@@ -38,32 +41,25 @@ static void	ft_on_key(void *param)
 		fdf->camera->zoom += 1 + (fdf->camera->zoom * 0.1);
 	else if (mlx_is_key_down(fdf->mlx, MLX_KEY_DOWN))
 		fdf->camera->zoom -= 1 + (fdf->camera->zoom * 0.1);
-	if (fdf->camera->zoom < 2)
-		fdf->camera->zoom = 2;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_1))
-		fdf->camera->alpha += 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_2))
-		fdf->camera->alpha -= 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_7))
-		fdf->camera->beta += 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_8))
-		fdf->camera->beta -= 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_LEFT))
-		fdf->camera->gamma += 0.1;
-	if (mlx_is_key_down(fdf->mlx, MLX_KEY_RIGHT))
-		fdf->camera->gamma -= 0.1;
-	if (fdf->camera->x_off > (int)(fdf->img->width + fdf->map->width * fdf->camera->zoom))
-		fdf->camera->x_off = 0 - fdf->map->width * fdf->camera->zoom;
-	if (fdf->camera->x_off < 0 - fdf->map->width * fdf->camera->zoom)
-		fdf->camera->x_off = fdf->img->width + fdf->map->width * fdf->camera->zoom;
-	if (fdf->camera->y_off > (int)(fdf->img->height + fdf->map->height * fdf->camera->zoom))
-		fdf->camera->y_off = 0 - fdf->map->height * fdf->camera->zoom;
-	if (fdf->camera->y_off < 0 - fdf->map->height * fdf->camera->zoom)
-		fdf->camera->y_off = fdf->img->height + fdf->map->height * fdf->camera->zoom;
+	check_cam_limits(fdf->camera, fdf->map, fdf->img);
 	fdf_draw_image(fdf, 0x00000000);
 }
 
-void	my_keyhooks(mlx_key_data_t keydata, void *param)
+void	check_cam_limits(t_camera *camera, t_map *map, mlx_image_t *img)
+{
+	if (camera->zoom < 2)
+		camera->zoom = 2;
+	if (camera->x_off > (int)(img->width + map->width * camera->zoom))
+		camera->x_off = 0 - map->width * camera->zoom;
+	if (camera->x_off < 0 - map->width * camera->zoom)
+		camera->x_off = img->width + map->width * camera->zoom;
+	if (camera->y_off > (int)(img->height + map->height * camera->zoom))
+		camera->y_off = 0 - map->height * camera->zoom;
+	if (camera->y_off < 0 - map->height * camera->zoom)
+		camera->y_off = img->height + map->height * camera->zoom;
+}
+
+static void	my_keyhooks(mlx_key_data_t keydata, void *param)
 {
 	t_fdf	*fdf;
 
@@ -74,14 +70,17 @@ void	my_keyhooks(mlx_key_data_t keydata, void *param)
 		reset_camera(fdf->camera, fdf->map, fdf->img);
 	if (keydata.key == MLX_KEY_P && keydata.action == MLX_PRESS)
 	{
-		fdf->camera->iso = 0;
+		fdf->camera->iso = -1;
 		fdf->camera->alpha = 1.570796;
-		fdf->camera->beta = 0.0;
-		fdf->camera->gamma = 0.0;
+		fdf->camera->beta = 0;
+		fdf->camera->gamma = 0;
 	}
 	if (keydata.key == MLX_KEY_I && keydata.action == MLX_PRESS)
 	{
-		fdf->camera->iso = 1;
+		fdf->camera->iso *= -1;
+		fdf->camera->alpha = 0;
+		fdf->camera->beta = 0;
+		fdf->camera->gamma = 0;
 	}
 	if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
 		center_camera(fdf->camera, fdf->map, fdf->img);

@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/11 14:06:54 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 16:49:26 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@
 
 // Project specific includes:
 # include <math.h>
-# include <stdio.h>
-# include <string.h>
 # include <fcntl.h>
 # include "MLX42.h"
 
 // DEFINES
 # define WIDTH	1920
 # define HEIGHT	1080
-# define SCALE_FACTOR 10
-# define RAD 0.01745
 
 // Structs:
 
@@ -94,7 +90,6 @@ typedef struct s_line
 // parser_funcs.c:
 int			fdf_open_map_file(char *input_file);
 t_list		*fdf_parse_map_data(int fd);
-// char		**fdf_parse_map_data(int fd);
 // init.c:
 t_fdf		*fdf_init(t_fdf *fdf, t_list *map_data);
 t_point		init_point(int x, int y, int z, uint32_t c);
@@ -103,11 +98,12 @@ t_camera	*init_camera(t_camera *camera, t_map *map, mlx_image_t *img);
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
 void		draw_line(t_fdf *fdf, t_point p1, t_point p2);
 void		fdf_put_pixel(t_fdf *fdf, int x, int y, t_color c);
-// map.c
-void		create_grid(t_map *map, t_list *map_data);
+// map.c:
+void		create_grid(t_map *map, t_list **map_data);
 void		fdf_create_map(t_map *map, t_list *map_data);
-// camera.c
+// projection.c:
 t_point		calculate_projection(t_point point, t_fdf *fdf);
+// camera.c
 void		reset_camera(t_camera *camera, t_map *map, mlx_image_t *img);
 void		center_camera(t_camera *camera, t_map *map, mlx_image_t *img);
 // bresenham_line.c
@@ -118,17 +114,16 @@ void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 void		ft_error(char *s);
 // user_input.c
 void		user_controls(t_fdf *fdf);
-void		my_keyhooks(mlx_key_data_t keydata, void* param);
+void		check_cam_limits(t_camera *camera, t_map *map, mlx_image_t *img);
+// user_input2.c
+void		cam_rotation_hooks(void *param);
 // menu.c:
 void		put_menu(t_fdf *fdf);
 // color.c:
 void		create_color(uint32_t num, t_color *color);
 uint32_t	ft_hextodec(char *hex);
 // utils.c:
-void		print_map_data(t_list *map);
-void		print_grid(t_map *map);
 size_t		fdf_count_rows(t_list *map_data);
 void		ft_swap(int *a, int *b);
-long long	ft_atoi_long(const char *str);
 
 #endif

@@ -6,51 +6,61 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 15:48:39 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/11 17:05:23 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 14:28:18 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-static void			fill_grid(char *point, t_map *map);
-static int			count_splits(char **array);
+static void	fill_grid(t_map *map, t_list *ptr, int y);
+static void	create_point(char *point, t_map *map);
+static int	count_splits(char **array);
+static void	free_content(void *nodeptr);
 
-void	create_grid(t_map *map, t_list *map_data)
+void	create_grid(t_map *map, t_list **map_data)
 {
-	int			x;
-	int			y;
-	int			width;
-	t_list		*ptr;
-	char		**points;
+	int		y;
+	t_list	*ptr;
 
 	y = 0;
-	ptr = map_data;
+	ptr = *map_data;
 	map->grid = (t_point **)ft_calloc(map->height, sizeof(t_point *));
 	if (!map->grid)
-			ft_error("Error: unsuccesful malloc.");
+		ft_error("Error: unsuccesful malloc.");
 	while (ptr)
 	{
-		x = 0;
-		points = ft_split(ptr->content, ' ');
-		width = count_splits(points);
-		if (map->width == 0 || width < map->width)
-			map->width = width;
-		map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
-		if (!map->grid[y])
-			ft_error("Error: unsuccesful malloc.");
-		while (x < map->width)
-		{
-			fill_grid(points[x], map);
-			free(points[x]);
-			x++;
-		}
-		free(points);
+		fill_grid(map, ptr, y);
 		y++;
 		ptr = ptr->next;
 	}
+	ft_lstclear(map_data, free_content);
 }
 
-static void	fill_grid(char *point, t_map *map)
+static void	fill_grid(t_map *map, t_list *ptr, int y)
+{
+	char	**points;
+	int		x;
+	int		width;
+
+	x = 0;
+	points = ft_split(ptr->content, ' ');
+	width = count_splits(points);
+	if (map->width == 0 || width < map->width)
+		map->width = width;
+	map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
+	if (!map->grid[y])
+		ft_error("Error: unsuccesful malloc.");
+	while (x < map->width)
+	{
+		create_point(points[x], map);
+		free(points[x]);
+		x++;
+	}
+	free(points);
+	points = NULL;
+}
+
+static void	create_point(char *point, t_map *map)
 {
 	static int	x = 0;
 	static int	y = 0;
@@ -65,7 +75,6 @@ static void	fill_grid(char *point, t_map *map)
 	{
 		color.c = ft_hextodec(data[1]);
 		create_color(color.c, &color);
-		printf("%u\n", color.c);
 	}
 	map->grid[y][x] = init_point(x, y, ft_atoi(data[0]), color.c);
 	x++;
@@ -87,4 +96,13 @@ static int	count_splits(char **array)
 	while (array[count])
 		count++;
 	return (count);
+}
+
+static void	free_content(void *nodeptr)
+{
+	char	*content;
+
+	content = (char *)nodeptr;
+	free(content);
+	content = NULL;
 }

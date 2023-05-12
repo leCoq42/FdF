@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/11 14:38:41 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 14:07:55 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_camera	*init_camera(t_camera *camera, t_map *map, mlx_image_t *img)
 	camera->beta = 0;
 	camera->gamma = 0;
 	camera->pretty = -1;
-	camera->iso = 0;
+	camera->iso = -1;
 	return (camera);
 }
 

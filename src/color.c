@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 16:06:03 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/11 17:06:10 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 13:28:09 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ uint32_t	ft_hextodec(char *hex)
 		else if (byte >= 'A' && byte <= 'F')
 			byte = byte - 'A' + 10;
 		else
-			ft_error("Error: invalid collor code.\n") ;
+			ft_error("Error: invalid collor code.\n");
 		res = (res << 4) | (byte & 0xF);
 		i++;
 	}

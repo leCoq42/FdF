@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/14 09:48:52 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/04 11:27:10 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/12 16:11:11 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ void	wu_line(t_fdf *fdf, t_point p1, t_point p2)
 		swap_points(&p1, &p2, 0);
 	delta.x = p2.x - p1.x;
 	delta.y = p2.y - p1.y;
-	line.grad = (delta.y / (delta.x + .1f));
+	if (delta.x != 0)
+		line.grad = (double)delta.y / delta.x;
+	else
+		line.grad = 0;
 	line.intery = p1.y + line.grad;
 	line.x = p1.x + 1;
-	while (line.x < p2.x)
+	while (line.x <= p2.x)
 	{
-		delta.c = color_interpol(p1, p2, line.x, delta);
-		draw_pix(fdf, delta.c, line, steep);
+		draw_pix(fdf, color_interpol(p1, p2, line.x, delta), line, steep);
 		line.intery += line.grad;
 		line.x++;
 	}
@@ -62,15 +64,16 @@ static void	swap_points(t_point *p1, t_point *p2, int steep)
 static t_color	color_interpol(t_point p1, t_point p2, int x, t_point delta)
 {
 	t_color	res;
-	float	t;
+	double	t;
 
+	ft_bzero(&res, sizeof(t_color));
 	if (delta.x == 0)
 		return (p1.c);
-	t = (x - p1.x) / (delta.x + 0.001f);
-	res.t_rgba.r = p1.c.t_rgba.r + (p2.c.t_rgba.r - p1.c.t_rgba.r) * t + 0.5;
-	res.t_rgba.g = p1.c.t_rgba.g + (p2.c.t_rgba.g - p1.c.t_rgba.g) * t + 0.5;
-	res.t_rgba.b = p1.c.t_rgba.b + (p2.c.t_rgba.b - p1.c.t_rgba.b) * t + 0.5;
-	res.t_rgba.a = p1.c.t_rgba.a + (p2.c.t_rgba.a - p1.c.t_rgba.a) * t + 0.5;
+	t = (double)(x - p1.x) / (delta.x);
+	res.t_rgba.r = round(p1.c.t_rgba.r + (p2.c.t_rgba.r - p1.c.t_rgba.r) * t);
+	res.t_rgba.g = round(p1.c.t_rgba.g + (p2.c.t_rgba.g - p1.c.t_rgba.g) * t);
+	res.t_rgba.b = round(p1.c.t_rgba.b + (p2.c.t_rgba.b - p1.c.t_rgba.b) * t);
+	res.t_rgba.a = round(p1.c.t_rgba.a + (p2.c.t_rgba.a - p1.c.t_rgba.a) * t);
 	return (res);
 }
 
