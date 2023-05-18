@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:12:38 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 13:37:02 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:27:57 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_list	*fdf_parse_map_data(int fd)
 	head = NULL;
 	line = get_next_line(fd);
 	if (!line)
-		ft_error("No data to read!");
+		ft_error("No data to read!\n");
 	while (line)
 	{
 		node = ft_lstnew((char *)line);
@@ -51,5 +51,5 @@ t_list	*fdf_parse_map_data(int fd)
 			ft_lstadd_back(&last, node);
 		line = get_next_line(fd);
 	}
-	return (head);
+	return (close(fd), head);
 }

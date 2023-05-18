@@ -6,11 +6,16 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 16:21:57 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:16:00 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	f(void)
+{
+	system("leaks fdf");
+}
 
 int	main(int argc, char **argv)
 {
@@ -18,6 +23,7 @@ int	main(int argc, char **argv)
 	t_list		*map_data;
 	t_fdf		*fdf;
 
+	atexit(f);
 	fdf = NULL;
 	if (argc != 2)
 		ft_error("Usage: ./fdf <path_to_map>\n");
@@ -25,13 +31,13 @@ int	main(int argc, char **argv)
 	map_data = fdf_parse_map_data(fd);
 	fdf = fdf_init(fdf, map_data);
 	create_grid(fdf->map, &map_data);
-	fdf->camera = init_camera(fdf->camera, fdf->map, fdf->img);
+	fdf->camera = init_camera(fdf->map, fdf->img);
 	fdf_draw_image(fdf, 0x00000000);
 	if (mlx_image_to_window(fdf->mlx, fdf->img, 0, 0) < 0)
-		ft_error("Error: unsuccesful drawing of image.\n");
-	user_controls(fdf);
+		free_after_error(&fdf, "Error: unsuccesful drawing of image.\n");
 	put_menu(fdf);
+	user_controls(fdf);
 	mlx_loop(fdf->mlx);
-	mlx_terminate(fdf->mlx);
+	free_before_exit(&fdf);
 	exit(EXIT_SUCCESS);
 }

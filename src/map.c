@@ -6,16 +6,15 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/10 15:48:39 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 14:28:18 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:25:32 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
 static void	fill_grid(t_map *map, t_list *ptr, int y);
-static void	create_point(char *point, t_map *map);
+static int	create_point(char *point, t_map *map);
 static int	count_splits(char **array);
-static void	free_content(void *nodeptr);
 
 void	create_grid(t_map *map, t_list **map_data)
 {
@@ -26,7 +25,7 @@ void	create_grid(t_map *map, t_list **map_data)
 	ptr = *map_data;
 	map->grid = (t_point **)ft_calloc(map->height, sizeof(t_point *));
 	if (!map->grid)
-		ft_error("Error: unsuccesful malloc.");
+		ft_error("Error: unsuccesful malloc.\n");
 	while (ptr)
 	{
 		fill_grid(map, ptr, y);
@@ -49,10 +48,11 @@ static void	fill_grid(t_map *map, t_list *ptr, int y)
 		map->width = width;
 	map->grid[y] = (t_point *)ft_calloc(map->width, sizeof(t_point));
 	if (!map->grid[y])
-		ft_error("Error: unsuccesful malloc.");
-	while (x < map->width)
+		ft_error("Error: unsuccesful malloc.\n");
+	while (x < width)
 	{
-		create_point(points[x], map);
+		if (x < map->width)
+			create_point(points[x], map);
 		free(points[x]);
 		x++;
 	}
@@ -60,7 +60,7 @@ static void	fill_grid(t_map *map, t_list *ptr, int y)
 	points = NULL;
 }
 
-static void	create_point(char *point, t_map *map)
+static int	create_point(char *point, t_map *map)
 {
 	static int	x = 0;
 	static int	y = 0;
@@ -68,6 +68,8 @@ static void	create_point(char *point, t_map *map)
 	char		**data;
 
 	data = ft_split(point, ',');
+	if (!data)
+		ft_error("Error with splitting data.\n");
 	ft_bzero(&color, sizeof(t_color));
 	if (!data[1])
 		color.c = 0xFFFFFFFF;
@@ -75,15 +77,16 @@ static void	create_point(char *point, t_map *map)
 	{
 		color.c = ft_hextodec(data[1]);
 		create_color(color.c, &color);
+		free(data[1]);
 	}
 	map->grid[y][x] = init_point(x, y, ft_atoi(data[0]), color.c);
 	x++;
-	free(data);
 	if (x >= map->width)
 	{
 		x = 0;
 		y++;
 	}
+	return (free(data[0]), free(data), 0);
 }
 
 static int	count_splits(char **array)
@@ -96,13 +99,4 @@ static int	count_splits(char **array)
 	while (array[count])
 		count++;
 	return (count);
-}
-
-static void	free_content(void *nodeptr)
-{
-	char	*content;
-
-	content = (char *)nodeptr;
-	free(content);
-	content = NULL;
 }

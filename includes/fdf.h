@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/03 13:43:11 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 16:49:26 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:28:43 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@
 # include "MLX42.h"
 
 // DEFINES
-# define WIDTH	1920
-# define HEIGHT	1080
+# ifndef WIDTH
+#  define WIDTH 1920
+# endif
+# ifndef HEIGHT
+#  define HEIGHT 1080
+# endif
 
 // Structs:
 
@@ -74,7 +78,7 @@ typedef struct s_camera
 typedef struct s_fdf
 {
 	t_map		*map;
-	t_camera	*camera;
+	t_camera	camera;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 }	t_fdf;
@@ -93,7 +97,7 @@ t_list		*fdf_parse_map_data(int fd);
 // init.c:
 t_fdf		*fdf_init(t_fdf *fdf, t_list *map_data);
 t_point		init_point(int x, int y, int z, uint32_t c);
-t_camera	*init_camera(t_camera *camera, t_map *map, mlx_image_t *img);
+t_camera	init_camera(t_map *map, mlx_image_t *img);
 // draw.c:
 void		fdf_draw_image(t_fdf *fdf, int32_t background);
 void		draw_line(t_fdf *fdf, t_point p1, t_point p2);
@@ -112,9 +116,10 @@ void		bresenham_line(t_fdf *fdf, t_point p1, t_point p2);
 void		wu_line(t_fdf *fdf, t_point p1, t_point p2);
 // error_funcs.c
 void		ft_error(char *s);
+void		free_after_error(t_fdf **fdf, char *s);
 // user_input.c
 void		user_controls(t_fdf *fdf);
-void		check_cam_limits(t_camera *camera, t_map *map, mlx_image_t *img);
+void		check_cam_limits(t_camera camera, t_map *map, mlx_image_t *img);
 // user_input2.c
 void		cam_rotation_hooks(void *param);
 // menu.c:
@@ -125,5 +130,8 @@ uint32_t	ft_hextodec(char *hex);
 // utils.c:
 size_t		fdf_count_rows(t_list *map_data);
 void		ft_swap(int *a, int *b);
+// free.c:
+void		free_before_exit(t_fdf **fdf);
+void		free_content(void *nodeptr);
 
 #endif

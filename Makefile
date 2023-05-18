@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/12 16:28:29 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/18 14:29:05 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,12 +41,13 @@ SRC			:=	fdf.c \
 				menu.c \
 				color.c \
 				projection.c \
+				free.c
 
 OBJ_DIR		:=	./obj
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 
 #RECIPES:
-# all:	libmlx libft $(NAME)
+all:	libmlx libft $(NAME)
 all:	libft $(NAME)
 
 libmlx:

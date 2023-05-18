@@ -1,25 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error_funcs.c                                      :+:    :+:            */
+/*   free.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/07 12:13:57 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/18 14:17:58 by mhaan         ########   odam.nl         */
+/*   Created: 2023/05/18 10:11:50 by mhaan         #+#    #+#                 */
+/*   Updated: 2023/05/18 13:49:51 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 
-void	ft_error(char *s)
+static void	free_grid(t_map *map);
+
+void	free_before_exit(t_fdf **fdf)
 {
-	ft_putstr_fd(s, STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	mlx_terminate((*fdf)->mlx);
+	free_grid((*fdf)->map);
+	free((*fdf)->map);
 }
 
-void	free_after_error(t_fdf **fdf, char *s)
+static void	free_grid(t_map *map)
 {
-	free_before_exit(fdf);
-	ft_error(s);
+	int	y;
+
+	y = 0;
+	while (y < map->height)
+	{
+		free(map->grid[y]);
+		y++;
+	}
+	free(map->grid);
+	map->grid = NULL;
+}
+
+void	free_content(void *nodeptr)
+{
+	char	*content;
+
+	content = (char *)nodeptr;
+	free(content);
+	content = NULL;
 }

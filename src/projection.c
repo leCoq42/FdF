@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/12 13:43:09 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 14:31:42 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 12:21:31 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ t_point	calculate_projection(t_point point, t_fdf *fdf)
 	t_point	proj;
 
 	proj = init_point(point.x, point.y, point.z, point.c.c);
-	proj.x *= fdf->camera->zoom;
-	proj.y *= fdf->camera->zoom;
-	proj.z *= (fdf->camera->zoom * 0.5);
-	rotate_x(&proj.y, &proj.z, fdf->camera->alpha);
-	rotate_y(&proj.x, &proj.z, fdf->camera->beta);
-	rotate_z(&proj.x, &proj.y, fdf->camera->gamma);
-	if (fdf->camera->iso > 0)
+	proj.x *= fdf->camera.zoom;
+	proj.y *= fdf->camera.zoom;
+	proj.z *= (fdf->camera.zoom * 0.5);
+	rotate_x(&proj.y, &proj.z, fdf->camera.alpha);
+	rotate_y(&proj.x, &proj.z, fdf->camera.beta);
+	rotate_z(&proj.x, &proj.y, fdf->camera.gamma);
+	if (fdf->camera.iso > 0)
 		iso_projection(&proj);
-	proj.x += fdf->camera->x_off;
-	proj.y += fdf->camera->y_off;
+	proj.x += fdf->camera.x_off;
+	proj.y += fdf->camera.y_off;
 	return (proj);
 }
 

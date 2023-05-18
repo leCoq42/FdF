@@ -6,7 +6,7 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/17 13:38:20 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/12 14:07:55 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:19:19 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_fdf	*fdf_init(t_fdf *fdf, t_list *map_data)
 	if (!fdf)
 		ft_error("Error with initializing fdf\n");
 	fdf->map = init_map(map_data);
-	fdf->camera = NULL;
 	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FdF", true);
 	if (!fdf->mlx)
 		ft_error("Error with initializing mlx.\n");
@@ -43,24 +42,23 @@ static t_map	*init_map(t_list *map_data)
 	return (map);
 }
 
-t_camera	*init_camera(t_camera *camera, t_map *map, mlx_image_t *img)
+t_camera	init_camera(t_map *map, mlx_image_t *img)
 {
-	camera = (t_camera *)ft_calloc(1, sizeof(t_camera));
-	if (!camera)
-		ft_error("Error: unsuccesful camaera initialization.");
+	t_camera	camera;
+
 	if (img->width / (map->width * 3) < img->height / (map->height * 2))
-		camera->zoom = img->width / (map->width * 3);
+		camera.zoom = img->width / (map->width * 3);
 	else
-		camera->zoom = img->height / (map->height * 2);
-	if (camera->zoom < 2)
-		camera->zoom = 2;
-	camera->x_off = (img->width / 2) - (map->width * camera->zoom) / 2;
-	camera->y_off = (img->height / 2) - (map->height * camera->zoom) / 2;
-	camera->alpha = 0;
-	camera->beta = 0;
-	camera->gamma = 0;
-	camera->pretty = -1;
-	camera->iso = -1;
+		camera.zoom = img->height / (map->height * 2);
+	if (camera.zoom < 2)
+		camera.zoom = 2;
+	camera.x_off = (img->width / 2) - (map->width * (camera.zoom) / 2);
+	camera.y_off = (img->height / 2) - (map->height * (camera.zoom) / 2);
+	camera.alpha = 0;
+	camera.beta = 0;
+	camera.gamma = 0;
+	camera.pretty = -1;
+	camera.iso = -1;
 	return (camera);
 }
 
