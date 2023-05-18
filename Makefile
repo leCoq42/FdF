@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/18 14:29:05 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/18 14:40:03 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ libft:
 clean:
 		@$(RM) $(OBJ_DIR)
 		@$(MAKE) clean -C $(LIBFT)
-# @rm -rf $(LIBMLX)/build/
+		@rm -rf $(LIBMLX)/build/
 
 fclean: clean
 		@$(RM) $(NAME)

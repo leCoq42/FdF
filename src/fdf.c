@@ -6,16 +6,11 @@
 /*   By: mhaan <mhaan@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/07 12:07:27 by mhaan         #+#    #+#                 */
-/*   Updated: 2023/05/18 14:16:00 by mhaan         ########   odam.nl         */
+/*   Updated: 2023/05/18 14:39:49 by mhaan         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	f(void)
-{
-	system("leaks fdf");
-}
 
 int	main(int argc, char **argv)
 {
@@ -23,7 +18,6 @@ int	main(int argc, char **argv)
 	t_list		*map_data;
 	t_fdf		*fdf;
 
-	atexit(f);
 	fdf = NULL;
 	if (argc != 2)
 		ft_error("Usage: ./fdf <path_to_map>\n");
