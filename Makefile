@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/18 14:40:03 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/18 15:00:38 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,6 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 
 #RECIPES:
 all:	libmlx libft $(NAME)
-all:	libft $(NAME)
 
 libmlx:
 		@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j
