@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/18 15:00:38 by mhaan         ########   odam.nl          #
+#    Updated: 2023/05/19 14:14:53 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME := fdf
 RM := /bin/rm -rf
 
 #COMPILATION VARIABLES
-CFLAGS ?= -Wall -Wextra -Werror
+CFLAGS ?= -Wall -Wextra -Werror -O3
 AR := ar -crs
 
 #DEPENDENCIES:
 LIBMLX		:= ./libs/MLX42
 LIBFT		:= ./libs/libft_ext
-LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L "/Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/"
+LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L"/Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/"
 
 #DIRS AND FILES
 HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
@@ -50,7 +50,8 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 all:	libmlx libft $(NAME)
 
 libmlx:
-		@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j
+		@cmake $(LIBMLX) -B $(LIBMLX)/build && cmake --build $(LIBMLX)/build -j
+# @cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j
 
 libft:
 		@make -j -C $(LIBFT)
@@ -68,7 +69,8 @@ re:		clean all
 
 #RULES:
 $(NAME): $(OBJS)
-		$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+		@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+# @$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME) -lm
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 		@mkdir -p $(OBJ_DIR)
