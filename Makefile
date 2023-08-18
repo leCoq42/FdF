@@ -15,7 +15,7 @@ NAME := fdf
 RM := /bin/rm -rf
 
 #COMPILATION VARIABLES
-CFLAGS ?= -Wall -Wextra -Werror -O3
+CFLAGS ?= -Wall -Wextra -Werror
 AR := ar -crs
 
 #DEPENDENCIES:
