@@ -6,7 +6,7 @@
 #    By: mhaan <mhaan@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/03 13:20:02 by mhaan         #+#    #+#                  #
-#    Updated: 2023/05/19 14:14:53 by mhaan         ########   odam.nl          #
+#    Updated: 2023/08/18 16:23:57 by mhaan         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,11 @@ RM := /bin/rm -rf
 
 #COMPILATION VARIABLES
 CFLAGS ?= -Wall -Wextra -Werror
+
+ifdef OPTIM
+	CFLAGS += -O3 -flto -march=native
+endif
+
 AR := ar -crs
 
 #DEPENDENCIES:
@@ -49,32 +54,40 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 #RECIPES:
 all:	libmlx libft $(NAME)
 
+optim:
+	@$(MAKE) OPTIM=1 all
+
+reoptim:
+	@$(MAKE) fclean
+	$(MAKE) optim
+
 libmlx:
 		@cmake $(LIBMLX) -B $(LIBMLX)/build && cmake --build $(LIBMLX)/build -j
 # @cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j
 
 libft:
-		@make -j -C $(LIBFT)
+	@make -j -C $(LIBFT)
 
 clean:
-		@$(RM) $(OBJ_DIR)
-		@$(MAKE) clean -C $(LIBFT)
-		@rm -rf $(LIBMLX)/build/
+	@$(RM) $(OBJ_DIR)
+	@$(MAKE) clean -C $(LIBFT)
+	@rm -rf $(LIBMLX)/build/
 
 fclean: clean
-		@$(RM) $(NAME)
-		@$(MAKE) fclean -C $(LIBFT)
+	@$(RM) $(NAME)
+	@$(MAKE) fclean -C $(LIBFT)
 
 re:		clean all
 
 #RULES:
 $(NAME): $(OBJS)
-		@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 # @$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME) -lm
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-		@mkdir -p $(OBJ_DIR)
-		@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
+#&& printf "Compiling: $(notdir $<)\n"
 
 #OTHER:
 .PHONY:	all, clean, fclean, re, libmlx
