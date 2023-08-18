@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"fdf.h"
+#include "fdf.h"
 
 static void		swap_points(t_point *p1, t_point *p2, int steep);
 static t_color	color_interpol(t_point p1, t_point p2, int x, t_point delta);

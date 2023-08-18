@@ -17,8 +17,9 @@ RM := /bin/rm -rf
 #COMPILATION VARIABLES
 CFLAGS ?= -Wall -Wextra -Werror
 
+
 ifdef OPTIM
-	CFLAGS += -O3 -flto -march=native
+	CFLAGS += -Ofast -flto -march=native
 endif
 
 AR := ar -crs
@@ -26,7 +27,8 @@ AR := ar -crs
 #DEPENDENCIES:
 LIBMLX		:= ./libs/MLX42
 LIBFT		:= ./libs/libft_ext
-LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L"/Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/"
+# LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -L"/Users/$(USER)/homebrew/Cellar/glfw/3.3.8/lib/"
+LIBS		:= $(LIBFT)/libft_ext.a $(LIBMLX)/build/libmlx42.a -lglfw -lm
 
 #DIRS AND FILES
 HEADERS		:=	-I./includes -I$(LIBMLX)/include/MLX42 -I$(LIBFT)/includes
